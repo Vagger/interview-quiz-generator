@@ -1,0 +1,50 @@
+[
+  {
+    "id": "equality",
+    "title": "Equality & collections",
+    "body": "Use value equality deliberately. Hash-based collections require equal objects to have equal hash codes. Keep fields used by equals and hashCode stable while an object is a key. HashMap does not guarantee iteration order; choose LinkedHashMap when insertion order matters.",
+    "code": "record UserId(long value) {}\nvar users = new HashMap<UserId, String>();\nusers.put(new UserId(7), \"Ada\");\nSystem.out.println(users.get(new UserId(7))); // Ada",
+    "pitfall": "A hash collision does not imply equality. Avoid mutable keys and do not assume HashMap is thread-safe.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html"
+  },
+  {
+    "id": "generics",
+    "title": "Generics & variance",
+    "body": "Generic types are invariant: List<Integer> is not a List<Number>. Use extends for a producer you read from and super for a consumer you write to. A List<? extends Number> provides Number values but cannot safely accept an arbitrary Number.",
+    "code": "static void addOne(List<? super Integer> target) {\n    target.add(1);\n}\nstatic double first(List<? extends Number> source) {\n    return source.get(0).doubleValue();\n}",
+    "pitfall": "Do not use raw types to bypass compiler checks. Reading from a super-bound list only guarantees Object.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html"
+  },
+  {
+    "id": "streams",
+    "title": "Streams & transformations",
+    "body": "Intermediate stream operations are lazy. A terminal operation starts processing, and a stream cannot be reused after consumption. Prefer transformations without shared mutable side effects. Parallel execution is not automatically faster or safe.",
+    "code": "var result = List.of(1, 2, 3, 4).stream()\n    .filter(n -> n % 2 == 0)\n    .map(n -> n * 10)\n    .toList(); // [20, 40]",
+    "pitfall": "Stream.toList() returns an unmodifiable list. Do not use peek as a reliable mechanism for business side effects.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html"
+  },
+  {
+    "id": "concurrency",
+    "title": "Concurrency & visibility",
+    "body": "Visibility and atomicity are separate concerns. A volatile write is visible to a subsequent read of that field, but increment is a read-modify-write operation. Use an atomic operation or locking for shared counters. ConcurrentHashMap provides atomic per-key operations such as compute.",
+    "code": "var count = new java.util.concurrent.atomic.AtomicInteger();\ncount.incrementAndGet();\n\nvar counts = new java.util.concurrent.ConcurrentHashMap<String, Integer>();\ncounts.merge(\"requests\", 1, Integer::sum);",
+    "pitfall": "A thread-safe map does not make a separate get-then-put sequence atomic. Avoid reasoning about correctness using timing or sleep.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html"
+  },
+  {
+    "id": "exceptions",
+    "title": "Exceptions & resource safety",
+    "body": "Try-with-resources closes AutoCloseable resources even when the body throws. Resources close in reverse declaration order. If both the body and close throw, the body exception remains primary and close exceptions are suppressed. Checked exceptions must be caught or declared.",
+    "code": "try (var reader = java.nio.file.Files.newBufferedReader(path)) {\n    return reader.readLine();\n} // reader closes on success or failure",
+    "pitfall": "Avoid return in finally: it can hide exceptions or replace a pending return value. Preserve the original cause when wrapping failures.",
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"
+  },
+  {
+    "id": "runtime",
+    "title": "Runtime & object semantics",
+    "body": "Java passes arguments by value. For objects, the copied value is a reference: a method can mutate the referenced object, but assigning its parameter cannot replace the caller\u2019s variable. Garbage collection reclaims unreachable objects; a reachable collection can retain unwanted objects indefinitely.",
+    "code": "static void change(StringBuilder text) {\n    text.append(\"!\");\n    text = new StringBuilder(\"replacement\");\n}\nvar text = new StringBuilder(\"Hi\");\nchange(text); // text now contains Hi!",
+    "pitfall": "Final prevents reassignment of a reference, not mutation of its object. Garbage collection does not close files or database connections.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html"
+  }
+]

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "java-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "equality",
+    "prompt": "Two objects are equal according to equals(). What must be true?",
+    "options": [
+      "Their hash codes are equal",
+      "They are the same reference",
+      "Their hash codes are different"
+    ],
+    "answer": 0,
+    "explanation": "Equal objects must have equal hash codes. The reverse is not required; collisions are allowed."
+  },
+  {
+    "id": "java-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "equality",
+    "prompt": "A HashMap key changes a field used by hashCode() after insertion. What can happen?",
+    "options": [
+      "Lookup can fail even with the same key reference",
+      "The map automatically relocates the entry",
+      "The compiler rejects the mutation"
+    ],
+    "answer": 0,
+    "explanation": "The entry can remain in a bucket selected by its old hash. Keep equality-related key state stable."
+  },
+  {
+    "id": "java-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "equality",
+    "prompt": "You need predictable insertion-order iteration for a map. Which fits?",
+    "options": [
+      "HashMap",
+      "LinkedHashMap",
+      "IdentityHashMap"
+    ],
+    "answer": 1,
+    "explanation": "LinkedHashMap preserves insertion order by default. HashMap provides no iteration-order guarantee."
+  },
+  {
+    "id": "java-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "generics",
+    "prompt": "Can a List<Integer> be assigned to a List<Number> variable?",
+    "options": [
+      "Yes, Integer extends Number",
+      "No, generic types are invariant",
+      "Only when the list is empty"
+    ],
+    "answer": 1,
+    "explanation": "If this assignment were allowed, a Double could be inserted into a list intended to hold Integer values."
+  },
+  {
+    "id": "java-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "generics",
+    "prompt": "Which parameter accepts a List<Number> and lets you safely add an Integer?",
+    "options": [
+      "List<? extends Integer>",
+      "List<? super Integer>",
+      "List<?>"
+    ],
+    "answer": 1,
+    "explanation": "A super bound accepts Integer or its supertypes as the element type, so writing an Integer is safe."
+  },
+  {
+    "id": "java-6",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "generics",
+    "prompt": "Reading an element from List<? extends Number> guarantees which type?",
+    "options": [
+      "Integer",
+      "Number",
+      "Double"
+    ],
+    "answer": 1,
+    "explanation": "The unknown element type is a subtype of Number. Reading as Number is safe; assuming Integer or Double is not."
+  },
+  {
+    "id": "java-7",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "streams",
+    "prompt": "When does filter normally begin evaluating a stream pipeline?",
+    "options": [
+      "When filter is called",
+      "When a terminal operation executes",
+      "When the list is created"
+    ],
+    "answer": 1,
+    "explanation": "Intermediate operations are lazy. A terminal operation drives traversal; some operations may be optimized away."
+  },
+  {
+    "id": "java-8",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "streams",
+    "prompt": "What happens when you call add() on a list returned by Stream.toList() in Java 21?",
+    "options": [
+      "It appends normally",
+      "It throws UnsupportedOperationException",
+      "It silently ignores the value"
+    ],
+    "answer": 1,
+    "explanation": "Stream.toList() returns an unmodifiable list. Use a mutable collection explicitly when you need to append."
+  },
+  {
+    "id": "java-9",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "streams",
+    "prompt": "After a stream is consumed with count(), how should you perform another traversal?",
+    "options": [
+      "Reuse the consumed stream",
+      "Create a new stream from the source",
+      "Call parallel() on the consumed stream"
+    ],
+    "answer": 1,
+    "explanation": "A stream supports one traversal. Reusing it is invalid and may throw IllegalStateException."
+  },
+  {
+    "id": "java-10",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "concurrency",
+    "prompt": "Two threads execute count++ on a shared volatile int. Is every increment preserved?",
+    "options": [
+      "Yes, volatile makes increment atomic",
+      "No, read-modify-write can lose updates",
+      "Yes, if count starts at zero"
+    ],
+    "answer": 1,
+    "explanation": "Volatile provides visibility, but increment comprises a read and a write. Use AtomicInteger.incrementAndGet or a lock."
+  },
+  {
+    "id": "java-11",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "concurrency",
+    "prompt": "Which safely increments a shared AtomicInteger?",
+    "options": [
+      "counter.set(counter.get() + 1)",
+      "counter.incrementAndGet()",
+      "counter.get() + 1"
+    ],
+    "answer": 1,
+    "explanation": "incrementAndGet performs an atomic update. A separate get and set can overwrite another thread\u2019s update."
+  },
+  {
+    "id": "java-12",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "concurrency",
+    "prompt": "For ConcurrentHashMap<String, Integer>, which atomically increments a per-key count?",
+    "options": [
+      "put(key, get(key) + 1)",
+      "merge(key, 1, Integer::sum)",
+      "A separate containsKey followed by put"
+    ],
+    "answer": 1,
+    "explanation": "ConcurrentHashMap.merge performs the per-key operation atomically. Separate method calls are not one atomic transaction."
+  },
+  {
+    "id": "java-13",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "exceptions",
+    "prompt": "Try-with-resources body throws, and resource close also throws. Which exception is primary?",
+    "options": [
+      "The body exception",
+      "The close exception",
+      "Both exceptions are discarded"
+    ],
+    "answer": 0,
+    "explanation": "The body exception is propagated; the close exception is attached as suppressed so both failures can be inspected."
+  },
+  {
+    "id": "java-14",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "exceptions",
+    "prompt": "In what order are two try-with-resources resources closed?",
+    "options": [
+      "Declaration order",
+      "Reverse declaration order",
+      "Unspecified order"
+    ],
+    "answer": 1,
+    "explanation": "Resources close in reverse initialization order, so a dependent resource can close before its dependency."
+  },
+  {
+    "id": "java-15",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "exceptions",
+    "prompt": "A method calls an operation that throws checked IOException. What is required?",
+    "options": [
+      "Catch it or declare it",
+      "Always wrap it in RuntimeException",
+      "Nothing; checked exceptions are optional"
+    ],
+    "answer": 0,
+    "explanation": "Checked exceptions must be handled or declared. Wrapping is a design choice, not a requirement."
+  },
+  {
+    "id": "java-16",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "runtime",
+    "prompt": "A method reassigns its object parameter to a new object. What happens to the caller\u2019s variable?",
+    "options": [
+      "It now references the new object",
+      "It retains its original reference",
+      "It becomes null"
+    ],
+    "answer": 1,
+    "explanation": "Java copies the reference value into the parameter. Reassigning that local copy does not reassign the caller\u2019s variable."
+  },
+  {
+    "id": "java-17",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "runtime",
+    "prompt": "What does final List<String> names guarantee?",
+    "options": [
+      "The list cannot change",
+      "The variable cannot be reassigned after initialization",
+      "All elements are immutable"
+    ],
+    "answer": 1,
+    "explanation": "Final restricts assignment to the variable. It does not make the referenced collection immutable."
+  },
+  {
+    "id": "java-18",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "runtime",
+    "prompt": "A static list retains references to objects no longer needed by the application. Will GC necessarily reclaim them?",
+    "options": [
+      "Yes, because they are unused",
+      "No, they remain reachable through the list",
+      "Only after System.gc()"
+    ],
+    "answer": 1,
+    "explanation": "Reachability determines collection eligibility, not business usefulness. Long-lived collections can cause memory retention."
+  }
+]

@@ -4,16 +4,26 @@ A local, single-user Java 21 practice app built with FastAPI, Jinja templates, a
 
 ## Run
 
-Requires Python 3.9+ (a current supported Python release is recommended).
+Requires Python 3.9+ (a current supported Python release is recommended) and Make.
+
+From the repository directory, run:
 
 ```sh
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --host 127.0.0.1
+make run
 ```
 
-Open http://127.0.0.1:8000. No API keys or external services are required.
+This creates the virtual environment, installs dependencies, and starts the app with automatic code reload. No environment activation is needed. Open http://127.0.0.1:8000 and press Ctrl+C in the terminal to stop. No API keys or external services are required. The first setup needs internet access to download dependencies; later runs reuse them.
+
+| Command | Purpose |
+| --- | --- |
+| `make` or `make help` | List commands |
+| `make setup` | Install app dependencies without starting the server |
+| `make run` | Set up and start the app |
+| `make run PORT=8001` | Use a different local port |
+| `make test` | Install test dependencies and run tests |
+| `make clean` | Remove the environment and test cache, keeping saved results |
+
+Dependencies are installed again when their requirements files change. To choose a Python interpreter for a new environment, use `make setup PYTHON=python3.12`.
 
 ## Included
 
@@ -36,8 +46,7 @@ This version shares one learning history across everyone using the server. Keep 
 ## Verify
 
 ```sh
-pip install -r requirements-dev.txt
-pytest -q
+make test
 ```
 
 Tests use temporary SQLite files and do not modify your practice history.

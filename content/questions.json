@@ -12,7 +12,9 @@
       "Their hash codes are different"
     ],
     "answer": 0,
-    "explanation": "Equal objects must have equal hash codes. The reverse is not required; collisions are allowed."
+    "explanation": "Equal objects must have equal hash codes. The reverse is not required; collisions are allowed.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-2",
@@ -27,7 +29,9 @@
       "The compiler rejects the mutation"
     ],
     "answer": 0,
-    "explanation": "The entry can remain in a bucket selected by its old hash. Keep equality-related key state stable."
+    "explanation": "The entry can remain in a bucket selected by its old hash. Keep equality-related key state stable.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-3",
@@ -42,7 +46,9 @@
       "IdentityHashMap"
     ],
     "answer": 1,
-    "explanation": "LinkedHashMap preserves insertion order by default. HashMap provides no iteration-order guarantee."
+    "explanation": "LinkedHashMap preserves insertion order by default. HashMap provides no iteration-order guarantee.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-4",
@@ -57,7 +63,9 @@
       "Only when the list is empty"
     ],
     "answer": 1,
-    "explanation": "If this assignment were allowed, a Double could be inserted into a list intended to hold Integer values."
+    "explanation": "If this assignment were allowed, a Double could be inserted into a list intended to hold Integer values.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html",
+    "difficulty": "Advanced"
   },
   {
     "id": "java-5",
@@ -72,7 +80,9 @@
       "List<?>"
     ],
     "answer": 1,
-    "explanation": "A super bound accepts Integer or its supertypes as the element type, so writing an Integer is safe."
+    "explanation": "A super bound accepts Integer or its supertypes as the element type, so writing an Integer is safe.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html",
+    "difficulty": "Advanced"
   },
   {
     "id": "java-6",
@@ -87,7 +97,9 @@
       "Double"
     ],
     "answer": 1,
-    "explanation": "The unknown element type is a subtype of Number. Reading as Number is safe; assuming Integer or Double is not."
+    "explanation": "The unknown element type is a subtype of Number. Reading as Number is safe; assuming Integer or Double is not.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html",
+    "difficulty": "Advanced"
   },
   {
     "id": "java-7",
@@ -102,7 +114,9 @@
       "When the list is created"
     ],
     "answer": 1,
-    "explanation": "Intermediate operations are lazy. A terminal operation drives traversal; some operations may be optimized away."
+    "explanation": "Intermediate operations are lazy. A terminal operation drives traversal; some operations may be optimized away.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-8",
@@ -117,7 +131,9 @@
       "It silently ignores the value"
     ],
     "answer": 1,
-    "explanation": "Stream.toList() returns an unmodifiable list. Use a mutable collection explicitly when you need to append."
+    "explanation": "Stream.toList() returns an unmodifiable list. Use a mutable collection explicitly when you need to append.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-9",
@@ -132,7 +148,9 @@
       "Call parallel() on the consumed stream"
     ],
     "answer": 1,
-    "explanation": "A stream supports one traversal. Reusing it is invalid and may throw IllegalStateException."
+    "explanation": "A stream supports one traversal. Reusing it is invalid and may throw IllegalStateException.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-10",
@@ -147,7 +165,9 @@
       "Yes, if count starts at zero"
     ],
     "answer": 1,
-    "explanation": "Volatile provides visibility, but increment comprises a read and a write. Use AtomicInteger.incrementAndGet or a lock."
+    "explanation": "Volatile provides visibility, but increment comprises a read and a write. Use AtomicInteger.incrementAndGet or a lock.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+    "difficulty": "Advanced"
   },
   {
     "id": "java-11",
@@ -162,7 +182,9 @@
       "counter.get() + 1"
     ],
     "answer": 1,
-    "explanation": "incrementAndGet performs an atomic update. A separate get and set can overwrite another thread\u2019s update."
+    "explanation": "incrementAndGet performs an atomic update. A separate get and set can overwrite another thread’s update.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+    "difficulty": "Advanced"
   },
   {
     "id": "java-12",
@@ -177,7 +199,9 @@
       "A separate containsKey followed by put"
     ],
     "answer": 1,
-    "explanation": "ConcurrentHashMap.merge performs the per-key operation atomically. Separate method calls are not one atomic transaction."
+    "explanation": "ConcurrentHashMap.merge performs the per-key operation atomically. Separate method calls are not one atomic transaction.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+    "difficulty": "Advanced"
   },
   {
     "id": "java-13",
@@ -192,7 +216,9 @@
       "Both exceptions are discarded"
     ],
     "answer": 0,
-    "explanation": "The body exception is propagated; the close exception is attached as suppressed so both failures can be inspected."
+    "explanation": "The body exception is propagated; the close exception is attached as suppressed so both failures can be inspected.",
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-14",
@@ -207,7 +233,9 @@
       "Unspecified order"
     ],
     "answer": 1,
-    "explanation": "Resources close in reverse initialization order, so a dependent resource can close before its dependency."
+    "explanation": "Resources close in reverse initialization order, so a dependent resource can close before its dependency.",
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-15",
@@ -222,7 +250,9 @@
       "Nothing; checked exceptions are optional"
     ],
     "answer": 0,
-    "explanation": "Checked exceptions must be handled or declared. Wrapping is a design choice, not a requirement."
+    "explanation": "Checked exceptions must be handled or declared. Wrapping is a design choice, not a requirement.",
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+    "difficulty": "Intermediate"
   },
   {
     "id": "java-16",
@@ -230,14 +260,16 @@
     "track": "java",
     "java_version": "21",
     "topic": "runtime",
-    "prompt": "A method reassigns its object parameter to a new object. What happens to the caller\u2019s variable?",
+    "prompt": "A method reassigns its object parameter to a new object. What happens to the caller’s variable?",
     "options": [
       "It now references the new object",
       "It retains its original reference",
       "It becomes null"
     ],
     "answer": 1,
-    "explanation": "Java copies the reference value into the parameter. Reassigning that local copy does not reassign the caller\u2019s variable."
+    "explanation": "Java copies the reference value into the parameter. Reassigning that local copy does not reassign the caller’s variable.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html",
+    "difficulty": "Foundation"
   },
   {
     "id": "java-17",
@@ -252,7 +284,9 @@
       "All elements are immutable"
     ],
     "answer": 1,
-    "explanation": "Final restricts assignment to the variable. It does not make the referenced collection immutable."
+    "explanation": "Final restricts assignment to the variable. It does not make the referenced collection immutable.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html",
+    "difficulty": "Foundation"
   },
   {
     "id": "java-18",
@@ -267,6 +301,2998 @@
       "Only after System.gc()"
     ],
     "answer": 1,
-    "explanation": "Reachability determines collection eligibility, not business usefulness. Long-lived collections can cause memory retention."
+    "explanation": "Reachability determines collection eligibility, not business usefulness. Long-lived collections can cause memory retention.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-types-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "types",
+    "prompt": "What is stored by double result = 5 / 2;?",
+    "options": [
+      "2.0",
+      "2.5",
+      "A compilation error"
+    ],
+    "answer": 0,
+    "explanation": "Both operands are int, so integer division yields 2 before widening to double.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-types-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "types",
+    "prompt": "Which computes 50,000 squared without int overflow?",
+    "options": [
+      "(long) 50_000 * 50_000",
+      "(long) (50_000 * 50_000)",
+      "long result = 50_000 * 50_000"
+    ],
+    "answer": 0,
+    "explanation": "Widen an operand before multiplication. Casting or assigning afterward cannot undo int overflow.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-types-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "types",
+    "prompt": "What happens when a null Integer is unboxed to int?",
+    "options": [
+      "NullPointerException",
+      "It becomes zero",
+      "A compilation error in every case"
+    ],
+    "answer": 0,
+    "explanation": "Unboxing requires an actual wrapper object; null cannot provide its primitive value.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-types-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "types",
+    "prompt": "After var count = 1, can count = \"one\" compile?",
+    "options": [
+      "No, count has static type int",
+      "Yes, var is dynamically typed",
+      "Yes, if count was not final"
+    ],
+    "answer": 0,
+    "explanation": "Local inference chooses int at compilation; later assignments must be compatible.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-types-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "types",
+    "prompt": "How do new BigDecimal(\"1.0\") and new BigDecimal(\"1.00\") compare?",
+    "options": [
+      "compareTo returns 0 but equals returns false",
+      "Both comparisons report equality",
+      "compareTo throws because scales differ"
+    ],
+    "answer": 0,
+    "explanation": "BigDecimal.equals includes scale, while compareTo compares numeric value.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-strings-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "strings",
+    "prompt": "What should compare the content of two non-null String objects?",
+    "options": [
+      "equals",
+      "==",
+      "identityHashCode"
+    ],
+    "answer": 0,
+    "explanation": "equals compares characters; == compares whether the references identify the same object.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-strings-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "strings",
+    "prompt": "String text = \"a\"; text.concat(\"b\"); What is text afterward?",
+    "options": [
+      "\"a\"",
+      "\"ab\"",
+      "null"
+    ],
+    "answer": 0,
+    "explanation": "Strings are immutable. concat returns another value, which was not assigned.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-strings-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "strings",
+    "prompt": "What does String.length() count?",
+    "options": [
+      "UTF-16 code units",
+      "Always Unicode code points",
+      "Always visible characters"
+    ],
+    "answer": 0,
+    "explanation": "Supplementary code points use two UTF-16 units, and grapheme clusters can span several code points.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-strings-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "strings",
+    "prompt": "Which treats a user-supplied string as a literal regex fragment?",
+    "options": [
+      "Pattern.quote(input)",
+      "input.trim()",
+      "Pattern.compile(input) alone"
+    ],
+    "answer": 0,
+    "explanation": "Pattern.quote escapes regex interpretation. Compiling the raw input still interprets regex syntax.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-strings-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "strings",
+    "prompt": "Which operation searches for a matching subsequence rather than requiring a whole-input match?",
+    "options": [
+      "Matcher.find()",
+      "String.matches()",
+      "Matcher.matches()"
+    ],
+    "answer": 0,
+    "explanation": "find locates a subsequence. The matches operations require the whole region or input to match.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-object-design-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "object-design",
+    "prompt": "Which determines overload selection?",
+    "options": [
+      "Compile-time argument types",
+      "Runtime argument types alone",
+      "The method name length"
+    ],
+    "answer": 0,
+    "explanation": "Overload resolution occurs at compile time. Instance overriding then dispatches on the runtime receiver.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-object-design-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "object-design",
+    "prompt": "Which implementation runs for an overridden instance method?",
+    "options": [
+      "The implementation selected by the runtime receiver type",
+      "Always the declared variable type’s implementation",
+      "Always the superclass implementation"
+    ],
+    "answer": 0,
+    "explanation": "Dynamic dispatch uses the actual receiver type for overridden instance methods.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-object-design-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "object-design",
+    "prompt": "Why avoid overridable method calls from constructors?",
+    "options": [
+      "Subclass state may not yet be initialized",
+      "The compiler always forbids them",
+      "They disable garbage collection"
+    ],
+    "answer": 0,
+    "explanation": "Runtime dispatch can reach subclass code before subclass initialization has completed.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-object-design-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "object-design",
+    "prompt": "May an override declare a broader checked exception than the parent method?",
+    "options": [
+      "No",
+      "Yes, if it is public",
+      "Yes, if it returns the same type"
+    ],
+    "answer": 0,
+    "explanation": "Clients relying on the parent contract must not be forced to handle new broader checked failures.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-object-design-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "object-design",
+    "prompt": "How are static methods with the same signature in a subclass treated?",
+    "options": [
+      "They are hidden, not dynamically overridden",
+      "They use normal instance dispatch",
+      "They are automatically final"
+    ],
+    "answer": 0,
+    "explanation": "Static method selection depends on the compile-time qualifying type, not receiver dispatch.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-records-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "records",
+    "prompt": "Does a record containing an ArrayList automatically prevent list mutation?",
+    "options": [
+      "No, record immutability is shallow",
+      "Yes, all component objects become immutable",
+      "Only when the accessor is called"
+    ],
+    "answer": 0,
+    "explanation": "Final component references do not freeze their objects. Copy mutable inputs and consider element mutability.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-records-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "records",
+    "prompt": "Can a record extend a user-defined class?",
+    "options": [
+      "No, it already extends java.lang.Record",
+      "Yes, any abstract class",
+      "Yes, if the class has no fields"
+    ],
+    "answer": 0,
+    "explanation": "Records have a fixed superclass, but can implement interfaces.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-records-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "records",
+    "prompt": "Which is a safe reason to avoid persisting enum ordinals?",
+    "options": [
+      "Reordering constants changes ordinal values",
+      "Enums do not support equality",
+      "Ordinals are randomly generated"
+    ],
+    "answer": 0,
+    "explanation": "An ordinal encodes declaration position, so source reordering can change stored meaning.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-records-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "records",
+    "prompt": "What does sealed constrain directly?",
+    "options": [
+      "Which direct subtypes are permitted",
+      "Which methods may throw exceptions",
+      "Which instances the garbage collector may reclaim"
+    ],
+    "answer": 0,
+    "explanation": "Sealing controls permitted direct subclasses or implementations, not memory management or exception behavior.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-records-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "records",
+    "prompt": "Where can a record validate and normalize constructor arguments concisely?",
+    "options": [
+      "A compact constructor",
+      "A finalizer",
+      "A static initializer that reads instance fields"
+    ],
+    "answer": 0,
+    "explanation": "The compact constructor runs before implicit field assignment and can validate or replace parameter values.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-pattern-matching-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "pattern-matching",
+    "prompt": "Which statement provides a value from a block arm of a switch expression?",
+    "options": [
+      "yield",
+      "continue",
+      "break with a value in Java 21"
+    ],
+    "answer": 0,
+    "explanation": "yield supplies the switch expression result from within an arm block.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-pattern-matching-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "pattern-matching",
+    "prompt": "Do arrow-form switch rules fall through to the next rule?",
+    "options": [
+      "No",
+      "Yes, unless break is written",
+      "Only for enum selectors"
+    ],
+    "answer": 0,
+    "explanation": "Arrow rules execute their matched arm without traditional switch fall-through.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-pattern-matching-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "pattern-matching",
+    "prompt": "A Java 21 switch on a String has default but no case null. What happens for null?",
+    "options": [
+      "NullPointerException",
+      "The default arm runs",
+      "The first String arm runs"
+    ],
+    "answer": 0,
+    "explanation": "Default is not a null handler. Add case null or reject null beforehand.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-pattern-matching-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "pattern-matching",
+    "prompt": "Why can case Object o before case String s be rejected?",
+    "options": [
+      "The unconditional Object pattern dominates the String case",
+      "String is not an Object",
+      "Switch never accepts Object selectors"
+    ],
+    "answer": 0,
+    "explanation": "The broader unconditional pattern already matches every String value, leaving the narrower case unreachable.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-pattern-matching-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "pattern-matching",
+    "prompt": "What introduces a pattern guard in Java 21 switch?",
+    "options": [
+      "when",
+      "where",
+      "instanceof after the arrow"
+    ],
+    "answer": 0,
+    "explanation": "A when guard adds a boolean condition after a pattern match.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collections-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collections",
+    "prompt": "What is the indexed-access cost of ArrayList.get(i)?",
+    "options": [
+      "Constant time",
+      "Always linear time",
+      "Always logarithmic time"
+    ],
+    "answer": 0,
+    "explanation": "ArrayList is backed by an array and supports direct indexed access.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collections-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collections",
+    "prompt": "What happens to an unmodifiableList view when its backing list changes?",
+    "options": [
+      "The view reflects the backing change",
+      "It keeps an independent snapshot",
+      "The change is always rejected by the backing list"
+    ],
+    "answer": 0,
+    "explanation": "The wrapper restricts modifications through the view; it does not detach storage.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collections-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collections",
+    "prompt": "Which operation is supported by Arrays.asList(\"a\", \"b\")?",
+    "options": [
+      "set(0, \"x\")",
+      "add(\"x\")",
+      "remove(0)"
+    ],
+    "answer": 0,
+    "explanation": "The array-backed list permits replacing elements but cannot change its size.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collections-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collections",
+    "prompt": "How does TreeSet determine that an element is already represented?",
+    "options": [
+      "Its ordering comparison returns zero",
+      "Only object identity matches",
+      "Only hashCode matches"
+    ],
+    "answer": 0,
+    "explanation": "TreeSet uses its comparator or natural ordering for membership equivalence.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collections-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collections",
+    "prompt": "Which pair implements FIFO with ArrayDeque?",
+    "options": [
+      "addLast and removeFirst",
+      "addFirst and removeFirst",
+      "addLast and removeLast"
+    ],
+    "answer": 0,
+    "explanation": "Enqueue at one end and dequeue at the opposite end to preserve arrival order.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-lambdas-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "lambdas",
+    "prompt": "Which standard functional interface maps T to R?",
+    "options": [
+      "Function<T, R>",
+      "Consumer<T>",
+      "Predicate<T>"
+    ],
+    "answer": 0,
+    "explanation": "Function returns a transformed value; Consumer returns no result and Predicate returns boolean.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-lambdas-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "lambdas",
+    "prompt": "Can a lambda capture a local variable that is later reassigned?",
+    "options": [
+      "No, it must be final or effectively final",
+      "Yes, all locals are copied on each call",
+      "Only if the variable is an int"
+    ],
+    "answer": 0,
+    "explanation": "Java requires captured locals to be final or effectively final.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-lambdas-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "lambdas",
+    "prompt": "Does capturing a final ArrayList make appending to it thread-safe?",
+    "options": [
+      "No",
+      "Yes, final synchronizes the list",
+      "Only inside a stream"
+    ],
+    "answer": 0,
+    "explanation": "Final prevents reference reassignment, not concurrent mutations of the referenced list.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-lambdas-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "lambdas",
+    "prompt": "For functions f and g, what does f.andThen(g) mean?",
+    "options": [
+      "Apply f, then g",
+      "Apply g, then f",
+      "Run both concurrently"
+    ],
+    "answer": 0,
+    "explanation": "andThen feeds the receiver result into the next function; compose reverses that ordering.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-lambdas-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "lambdas",
+    "prompt": "Inside a lambda in an instance method, what does this normally refer to?",
+    "options": [
+      "The enclosing instance",
+      "A new anonymous lambda instance",
+      "The functional interface class object"
+    ],
+    "answer": 0,
+    "explanation": "Lambda expressions retain the enclosing meaning of this rather than introducing an anonymous-class this.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-optional-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "optional",
+    "prompt": "What does Optional.of(null) do?",
+    "options": [
+      "Throws NullPointerException",
+      "Returns Optional.empty()",
+      "Creates a present null value"
+    ],
+    "answer": 0,
+    "explanation": "Use ofNullable for nullable input. Optional cannot hold a present null.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-optional-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "optional",
+    "prompt": "Which fallback is evaluated lazily only when empty?",
+    "options": [
+      "orElseGet(() -> loadDefault())",
+      "orElse(loadDefault())",
+      "Both always defer loadDefault"
+    ],
+    "answer": 0,
+    "explanation": "orElse receives an already-evaluated argument; orElseGet invokes its supplier only when absent.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-optional-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "optional",
+    "prompt": "Which operation fits a mapper returning Optional<Address>?",
+    "options": [
+      "flatMap",
+      "map followed by ignoring the inner Optional",
+      "peek"
+    ],
+    "answer": 0,
+    "explanation": "flatMap composes an Optional-returning mapper without adding a wrapper layer.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-optional-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "optional",
+    "prompt": "What happens to Optional.of(\"x\").map(x -> null)?",
+    "options": [
+      "It becomes empty",
+      "It contains null",
+      "It keeps \"x\""
+    ],
+    "answer": 0,
+    "explanation": "map treats a null mapping result as absence, unlike a present Optional value.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-optional-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "optional",
+    "prompt": "Should a method declared Optional<User> return null for a missing user?",
+    "options": [
+      "No, return Optional.empty()",
+      "Yes, callers can unbox it",
+      "Yes, Optional is just documentation"
+    ],
+    "answer": 0,
+    "explanation": "Returning null breaks the explicit container contract and forces callers back to null checks.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collectors-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collectors",
+    "prompt": "What happens when Collectors.toMap encounters duplicate keys without a merge function?",
+    "options": [
+      "IllegalStateException",
+      "The last value is always kept",
+      "The first value is always kept"
+    ],
+    "answer": 0,
+    "explanation": "The two-argument toMap collector rejects duplicate mapped keys. Add a merge function to define a policy.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-collectors-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collectors",
+    "prompt": "Which is a valid identity for integer multiplication in reduce?",
+    "options": [
+      "1",
+      "0",
+      "-1"
+    ],
+    "answer": 0,
+    "explanation": "An identity leaves any operand unchanged. Multiplying by one preserves the value.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-collectors-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collectors",
+    "prompt": "Why is subtraction unsuitable as a general parallel reduction operator?",
+    "options": [
+      "It is not associative",
+      "It cannot operate on integers",
+      "It is always slower than addition"
+    ],
+    "answer": 0,
+    "explanation": "Different grouping changes subtraction results, so parallel partial reductions cannot freely regroup it.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-collectors-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collectors",
+    "prompt": "Which preserves an ordered stream’s encounter order when performing parallel actions?",
+    "options": [
+      "forEachOrdered",
+      "forEach",
+      "unordered"
+    ],
+    "answer": 0,
+    "explanation": "forEachOrdered respects the defined encounter order; forEach may execute actions in any order.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-collectors-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collectors",
+    "prompt": "How do you explicitly request a mutable ArrayList from collect?",
+    "options": [
+      "Collectors.toCollection(ArrayList::new)",
+      "Assume Collectors.toList always returns ArrayList",
+      "Use Stream.toList then add"
+    ],
+    "answer": 0,
+    "explanation": "toCollection states the result-container factory. Do not infer implementation guarantees from toList.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-datetime-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "datetime",
+    "prompt": "Which type represents a point on the global timeline?",
+    "options": [
+      "Instant",
+      "LocalDateTime",
+      "LocalDate"
+    ],
+    "answer": 0,
+    "explanation": "Instant represents a timeline position; local temporal types do not carry enough zone information.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-datetime-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "datetime",
+    "prompt": "Does LocalDateTime uniquely identify a global instant?",
+    "options": [
+      "No, it lacks a zone or offset",
+      "Yes, it always uses UTC",
+      "Yes, it uses the creation machine’s zone internally"
+    ],
+    "answer": 0,
+    "explanation": "LocalDateTime stores local fields without attaching an offset or zone.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-datetime-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "datetime",
+    "prompt": "What makes current-time behavior deterministic in a test?",
+    "options": [
+      "Inject a fixed Clock",
+      "Sleep until a desired time",
+      "Use the server default zone"
+    ],
+    "answer": 0,
+    "explanation": "A fixed Clock supplies controlled time and zone information without depending on the wall clock.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-datetime-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "datetime",
+    "prompt": "Across daylight-saving transitions, must one calendar day equal 24 elapsed hours?",
+    "options": [
+      "No",
+      "Yes, by the Period contract",
+      "Only if represented as ZonedDateTime"
+    ],
+    "answer": 0,
+    "explanation": "A local calendar day can span a different number of elapsed hours when the offset changes.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-datetime-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "datetime",
+    "prompt": "Which models a date-based amount such as one month?",
+    "options": [
+      "Period",
+      "Duration",
+      "Instant"
+    ],
+    "answer": 0,
+    "explanation": "Period models calendar units; Duration models seconds and nanoseconds.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-io-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "io",
+    "prompt": "Must a Files.lines stream be closed after a terminal operation?",
+    "options": [
+      "Yes, use try-with-resources",
+      "No, count always closes it",
+      "Only if no lines were read"
+    ],
+    "answer": 0,
+    "explanation": "Files.lines owns an open file resource. Terminal consumption does not replace explicit closure.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-io-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "io",
+    "prompt": "Does Path.normalize resolve symbolic links?",
+    "options": [
+      "No, it only normalizes path syntax",
+      "Yes, it opens every directory",
+      "Only for absolute paths"
+    ],
+    "answer": 0,
+    "explanation": "normalize is syntactic. Resolving the actual filesystem path requires filesystem-aware operations.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-io-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "io",
+    "prompt": "Why is exists(path) followed by open(path) insufficient for correctness?",
+    "options": [
+      "The filesystem may change between the calls",
+      "exists always opens a write lock",
+      "Path objects are mutable"
+    ],
+    "answer": 0,
+    "explanation": "The check and use are separate operations, allowing a race between them.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-io-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "io",
+    "prompt": "Which approach suits a very large text file?",
+    "options": [
+      "Process incrementally with a closed buffered reader or stream",
+      "Always readAllLines first",
+      "Convert the whole file to one String"
+    ],
+    "answer": 0,
+    "explanation": "Incremental processing bounds memory. Whole-file methods scale with input size.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-io-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "io",
+    "prompt": "What can happen when ATOMIC_MOVE is unsupported?",
+    "options": [
+      "AtomicMoveNotSupportedException",
+      "The API guarantees transparent atomic emulation",
+      "The compiler rejects the move"
+    ],
+    "answer": 0,
+    "explanation": "Atomic support depends on the provider and filesystem. A fallback policy must be explicit.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-http-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "http",
+    "prompt": "A successful HttpClient.send returns status 500. Must send have thrown an exception?",
+    "options": [
+      "No, inspect the response status",
+      "Yes, every 5xx causes IOException",
+      "Yes, unless the body is empty"
+    ],
+    "answer": 0,
+    "explanation": "HTTP error statuses are response data, not automatically Java transport exceptions.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-http-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "http",
+    "prompt": "Why reuse an HttpClient across requests?",
+    "options": [
+      "To reuse its configuration and connection pools",
+      "Because each request mutates its URL permanently",
+      "Because a client supports exactly one request"
+    ],
+    "answer": 0,
+    "explanation": "The immutable client is designed for multiple requests and manages reusable connection resources.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-http-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "http",
+    "prompt": "Is blindly retrying a timed-out payment write safe?",
+    "options": [
+      "No, the server may already have applied it",
+      "Yes, timeout proves no remote side effect",
+      "Yes, if retried immediately"
+    ],
+    "answer": 0,
+    "explanation": "A timeout leaves the remote outcome uncertain. Use domain-aware idempotency and reconciliation.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-http-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "http",
+    "prompt": "Where is the connection timeout configured?",
+    "options": [
+      "HttpClient.Builder",
+      "Only on BodyHandlers",
+      "Only on a response"
+    ],
+    "answer": 0,
+    "explanation": "The client builder sets connection establishment timeout; request timeout is a distinct configuration.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-http-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "http",
+    "prompt": "What is a risk of BodyHandlers.ofString for unbounded input?",
+    "options": [
+      "The response body is buffered in memory",
+      "It always truncates responses to one kilobyte",
+      "It writes the body to the database"
+    ],
+    "answer": 0,
+    "explanation": "Choose a bounded or streaming strategy when body size is not controlled.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-jdbc-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jdbc",
+    "prompt": "What is the default auto-commit mode of a new JDBC Connection?",
+    "options": [
+      "Enabled",
+      "Disabled",
+      "Chosen by PreparedStatement"
+    ],
+    "answer": 0,
+    "explanation": "JDBC connections default to auto-commit. Disable it explicitly to group statements into a transaction.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jdbc-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jdbc",
+    "prompt": "Can a PreparedStatement placeholder bind a table name?",
+    "options": [
+      "No, placeholders bind values",
+      "Yes, setString safely substitutes SQL identifiers",
+      "Only when auto-commit is disabled"
+    ],
+    "answer": 0,
+    "explanation": "SQL identifiers are syntax, not bound data values. Use validated identifiers when dynamic structure is required.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jdbc-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jdbc",
+    "prompt": "Two SQL updates must succeed or fail together. What is the key setup?",
+    "options": [
+      "Disable auto-commit and explicitly commit or roll back the unit",
+      "Execute both with auto-commit and hope the second succeeds",
+      "Use separate connections with no coordination"
+    ],
+    "answer": 0,
+    "explanation": "A shared transaction groups the statements; independent auto-commits can leave partial effects.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jdbc-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jdbc",
+    "prompt": "Does a local JDBC transaction automatically roll back a completed remote HTTP request?",
+    "options": [
+      "No",
+      "Yes, if both occur inside the same try block",
+      "Yes, if Connection is AutoCloseable"
+    ],
+    "answer": 0,
+    "explanation": "A JDBC transaction covers its database work, not arbitrary external side effects.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jdbc-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jdbc",
+    "prompt": "What does a connection pool mainly limit?",
+    "options": [
+      "Concurrent borrowed database connections",
+      "The total number of Java classes",
+      "The lifetime number of SQL statements"
+    ],
+    "answer": 0,
+    "explanation": "The pool provides bounded connection reuse; it does not make the database infinitely scalable.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-serialization-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "serialization",
+    "prompt": "Does Java SE provide a general-purpose built-in JSON object mapper?",
+    "options": [
+      "No, choose a library or explicit encoding",
+      "Yes, ObjectInputStream parses JSON",
+      "Yes, every record has toJson()"
+    ],
+    "answer": 0,
+    "explanation": "Native object serialization and JSON mapping are different mechanisms.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ObjectInputStream.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-serialization-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "serialization",
+    "prompt": "Is ObjectInputStream a safe default for arbitrary untrusted network input?",
+    "options": [
+      "No",
+      "Yes, if objects implement Serializable",
+      "Yes, if serialVersionUID is present"
+    ],
+    "answer": 0,
+    "explanation": "Native deserialization can execute object-reconstruction behavior. Avoid it for untrusted payloads.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ObjectInputStream.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-serialization-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "serialization",
+    "prompt": "Does transient automatically exclude a field from every JSON library?",
+    "options": [
+      "No, mapper behavior is library-specific",
+      "Yes, the JVM removes the field",
+      "Yes, but only on records"
+    ],
+    "answer": 0,
+    "explanation": "transient concerns default native serialization; JSON libraries have their own mapping rules.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ObjectInputStream.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-serialization-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "serialization",
+    "prompt": "Which change most clearly needs an explicit compatibility plan?",
+    "options": [
+      "Renaming a required external field",
+      "Renaming an internal local variable",
+      "Reformatting private source code"
+    ],
+    "answer": 0,
+    "explanation": "External consumers depend on field names and requiredness, unlike internal implementation details.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ObjectInputStream.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-serialization-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "serialization",
+    "prompt": "Does unchanged serialVersionUID guarantee every class change is safe?",
+    "options": [
+      "No, invariants and compatibility still matter",
+      "Yes, all fields are automatically migrated",
+      "Yes, all constructors rerun normally"
+    ],
+    "answer": 0,
+    "explanation": "The identifier participates in compatibility checks; it is not a general migration mechanism.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ObjectInputStream.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-executors-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "executors",
+    "prompt": "Does newFixedThreadPool bound its waiting-task queue?",
+    "options": [
+      "No, its queue is unbounded",
+      "Yes, to the worker count",
+      "Yes, to one task"
+    ],
+    "answer": 0,
+    "explanation": "The worker count is bounded, but pending tasks can accumulate in the unbounded queue.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-executors-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "executors",
+    "prompt": "A Future.get(timeout, unit) times out. Has the task necessarily stopped?",
+    "options": [
+      "No",
+      "Yes, it is automatically interrupted",
+      "Yes, its thread is killed"
+    ],
+    "answer": 0,
+    "explanation": "A timed get limits waiting. Cancellation is a separate action and remains cooperative.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-executors-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "executors",
+    "prompt": "What does ExecutorService.shutdown do?",
+    "options": [
+      "Rejects new submissions and allows accepted work to finish",
+      "Immediately kills every worker",
+      "Erases completed Future results"
+    ],
+    "answer": 0,
+    "explanation": "Orderly shutdown stops accepting work without automatically abandoning already accepted tasks.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-executors-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "executors",
+    "prompt": "If you cannot propagate InterruptedException, what usually preserves cancellation intent?",
+    "options": [
+      "Restore the interrupt flag",
+      "Ignore it and retry forever",
+      "Convert it to a successful null result"
+    ],
+    "answer": 0,
+    "explanation": "Restoring the flag lets higher layers observe the interruption request.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-executors-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "executors",
+    "prompt": "Does Future.cancel(true) guarantee that running task code stops immediately?",
+    "options": [
+      "No, interruption is cooperative",
+      "Yes, Java terminates the thread forcibly",
+      "Yes, if the task performs arithmetic"
+    ],
+    "answer": 0,
+    "explanation": "The task must respond to interruption; cancellation does not forcibly terminate arbitrary Java code.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-futures-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "futures",
+    "prompt": "Which operation flattens a function returning CompletableFuture<R>?",
+    "options": [
+      "thenCompose",
+      "thenApply",
+      "thenAccept"
+    ],
+    "answer": 0,
+    "explanation": "thenCompose chains an asynchronous result without producing a nested future.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-futures-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "futures",
+    "prompt": "Can a non-async continuation run on the thread that completes the previous stage?",
+    "options": [
+      "Yes",
+      "No, it always starts a new thread",
+      "Only on virtual threads"
+    ],
+    "answer": 0,
+    "explanation": "Non-async stages may execute on a completion thread. Do not assume independent scheduling.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-futures-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "futures",
+    "prompt": "Where does supplyAsync without an explicit executor generally run?",
+    "options": [
+      "The common ForkJoinPool",
+      "Always the calling thread",
+      "Always a new dedicated virtual thread"
+    ],
+    "answer": 0,
+    "explanation": "The default async facility generally uses the common pool, with documented fallback behavior for low parallelism.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-futures-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "futures",
+    "prompt": "Which stage is intended to turn failure into a fallback value?",
+    "options": [
+      "exceptionally",
+      "whenComplete returning normally",
+      "thenRun with no error handling"
+    ],
+    "answer": 0,
+    "explanation": "exceptionally is a recovery transformation. whenComplete observes the outcome without normalizing a failure.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-futures-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "futures",
+    "prompt": "Does orTimeout necessarily interrupt the underlying computation?",
+    "options": [
+      "No",
+      "Yes, every timeout cancels its thread",
+      "Yes, unless the result is a record"
+    ],
+    "answer": 0,
+    "explanation": "It controls future completion, not arbitrary underlying work. Cancellation requires separate cooperation.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-virtual-threads-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "virtual-threads",
+    "prompt": "Which workload most directly benefits from many virtual threads?",
+    "options": [
+      "Many independent tasks waiting on supported blocking I/O",
+      "One CPU-bound arithmetic loop",
+      "One already-completed constant expression"
+    ],
+    "answer": 0,
+    "explanation": "Virtual threads improve scalable waiting and concurrency, not the execution speed of CPU work.",
+    "source": "https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-virtual-threads-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "virtual-threads",
+    "prompt": "Should cheap virtual threads normally be pooled for thread reuse?",
+    "options": [
+      "No, create one per task",
+      "Yes, always use a pool of exactly eight",
+      "Yes, their creation requires an OS thread each time"
+    ],
+    "answer": 0,
+    "explanation": "Virtual threads are intended to be cheap per-task threads. Bound downstream resources separately.",
+    "source": "https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-virtual-threads-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "virtual-threads",
+    "prompt": "What can pin a virtual thread during blocking in Java 21?",
+    "options": [
+      "Executing inside a synchronized region",
+      "Calling any pure integer method",
+      "Using any record instance"
+    ],
+    "answer": 0,
+    "explanation": "In Java 21 a blocked virtual thread can remain mounted while in a synchronized region. Later releases differ.",
+    "source": "https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-virtual-threads-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "virtual-threads",
+    "prompt": "Do virtual threads alone keep the JVM alive?",
+    "options": [
+      "No, they are daemon threads",
+      "Yes, all threads are non-daemon",
+      "Only if created through an executor"
+    ],
+    "answer": 0,
+    "explanation": "A JVM can exit when no non-daemon threads remain; manage task lifetimes explicitly.",
+    "source": "https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-virtual-threads-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "virtual-threads",
+    "prompt": "What should limit access to a database that only supports 20 concurrent operations?",
+    "options": [
+      "An explicit resource limit such as a semaphore or connection pool",
+      "An unlimited number of virtual threads alone",
+      "Removing transaction boundaries"
+    ],
+    "answer": 0,
+    "explanation": "Cheap threads do not create more database capacity. Limit the scarce operation directly.",
+    "source": "https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-locks-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "locks",
+    "prompt": "Why should an acquired ReentrantLock be released in finally?",
+    "options": [
+      "To release it even when protected code throws",
+      "To make the lock non-reentrant",
+      "To disable interruption globally"
+    ],
+    "answer": 0,
+    "explanation": "Without finally, an exception can leave the lock held and block other threads indefinitely.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-locks-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "locks",
+    "prompt": "Why wait for a condition in a loop?",
+    "options": [
+      "Wakeups do not guarantee the predicate is true",
+      "wait never reacquires the monitor",
+      "Loops make the monitor fair"
+    ],
+    "answer": 0,
+    "explanation": "Spurious wakeups and intervening state changes require rechecking the shared predicate.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-locks-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "locks",
+    "prompt": "Does Thread.sleep release an owned synchronized monitor?",
+    "options": [
+      "No",
+      "Yes, for the whole sleep duration",
+      "Only if the sleep is longer than a second"
+    ],
+    "answer": 0,
+    "explanation": "sleep pauses execution without releasing monitors held by the thread.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-locks-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "locks",
+    "prompt": "Which practice helps prevent lock-order deadlocks?",
+    "options": [
+      "Acquire multiple locks in a consistent global order",
+      "Acquire locks in random order",
+      "Hold locks while waiting for arbitrary callbacks"
+    ],
+    "answer": 0,
+    "explanation": "A consistent order removes cycles caused by opposite acquisition order.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-locks-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "locks",
+    "prompt": "Does synchronizing all writers make arbitrary unsynchronized reads safe?",
+    "options": [
+      "No, reads still need the proper visibility strategy",
+      "Yes, all Java fields become volatile",
+      "Yes, the JVM locks every getter automatically"
+    ],
+    "answer": 0,
+    "explanation": "Readers must participate in the synchronization or use another correct publication and visibility mechanism.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jvm-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jvm",
+    "prompt": "What does javac primarily produce?",
+    "options": [
+      "Class files containing bytecode and metadata",
+      "Only operating-system-specific machine code",
+      "Only JSON class descriptions"
+    ],
+    "answer": 0,
+    "explanation": "The Java compiler produces class files for JVM loading and execution.",
+    "source": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jvm-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jvm",
+    "prompt": "Can a Java 21 class file always run on a Java 17 JVM?",
+    "options": [
+      "No, newer class-file versions may be rejected",
+      "Yes, bytecode has no version",
+      "Yes, if the class is final"
+    ],
+    "answer": 0,
+    "explanation": "Runtime compatibility depends on class-file version and platform APIs; target the intended release explicitly.",
+    "source": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jvm-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jvm",
+    "prompt": "What contributes to runtime class identity besides binary name?",
+    "options": [
+      "The defining class loader",
+      "The source file’s modification time",
+      "The package comment"
+    ],
+    "answer": 0,
+    "explanation": "Two defining loaders can create distinct runtime types with the same binary name.",
+    "source": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jvm-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jvm",
+    "prompt": "Must reading a compile-time constant initialize its declaring class?",
+    "options": [
+      "No",
+      "Yes, every field read initializes it",
+      "Only if the value is an int"
+    ],
+    "answer": 0,
+    "explanation": "Compile-time constants can be inlined and their use does not necessarily trigger class initialization.",
+    "source": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jvm-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jvm",
+    "prompt": "What can a later NoClassDefFoundError indicate after an earlier initialization failure?",
+    "options": [
+      "The class remains erroneous after initialization failed",
+      "Only that a source file was deleted",
+      "Only that heap memory is full"
+    ],
+    "answer": 0,
+    "explanation": "A failed class initialization can lead later active uses to report NoClassDefFoundError.",
+    "source": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-memory-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "memory",
+    "prompt": "Are two objects that only reference each other necessarily leaked?",
+    "options": [
+      "No, an unreachable cycle can be collected",
+      "Yes, Java uses only reference counting",
+      "Yes, unless both implement AutoCloseable"
+    ],
+    "answer": 0,
+    "explanation": "Tracing garbage collectors can reclaim unreachable cycles.",
+    "source": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-memory-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "memory",
+    "prompt": "Can a static cache cause memory retention despite garbage collection?",
+    "options": [
+      "Yes, it can keep objects reachable",
+      "No, GC clears all unused business data",
+      "Only if keys are primitive"
+    ],
+    "answer": 0,
+    "explanation": "A reachable cache can retain data indefinitely unless the application evicts it.",
+    "source": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-memory-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "memory",
+    "prompt": "Does -Xmx bound the entire JVM process memory?",
+    "options": [
+      "No, it limits the maximum Java heap",
+      "Yes, it includes all native allocations",
+      "Yes, it caps the operating system page cache"
+    ],
+    "answer": 0,
+    "explanation": "The process also consumes memory for stacks, class metadata, code, and native resources.",
+    "source": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-memory-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "memory",
+    "prompt": "Does System.gc guarantee immediate collection and memory release?",
+    "options": [
+      "No",
+      "Yes, it blocks until all unreachable objects are gone",
+      "Only for records"
+    ],
+    "answer": 0,
+    "explanation": "System.gc is a request with implementation and configuration caveats, not a deterministic reclamation API.",
+    "source": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-memory-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "memory",
+    "prompt": "What should release a file handle deterministically?",
+    "options": [
+      "Explicit close, preferably try-with-resources",
+      "Waiting for finalization",
+      "Making the reference final"
+    ],
+    "answer": 0,
+    "explanation": "External resources need an explicit ownership and closure discipline independent of GC.",
+    "source": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-performance-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "performance",
+    "prompt": "What does p99 latency describe?",
+    "options": [
+      "A value at or below which roughly 99% of observed latencies fall",
+      "The average latency multiplied by 99",
+      "The maximum possible latency"
+    ],
+    "answer": 0,
+    "explanation": "Percentiles describe an observed distribution and reveal tail behavior hidden by an average.",
+    "source": "https://docs.oracle.com/en/java/javase/21/jfapi/flight-recorder-api-programmers-guide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-performance-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "performance",
+    "prompt": "Which tool is designed to record JVM runtime events over time?",
+    "options": [
+      "Java Flight Recorder",
+      "Only javac",
+      "Only jar"
+    ],
+    "answer": 0,
+    "explanation": "JFR records runtime events useful for diagnosing CPU, allocation, contention, and other behavior.",
+    "source": "https://docs.oracle.com/en/java/javase/21/jfapi/flight-recorder-api-programmers-guide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-performance-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "performance",
+    "prompt": "Why can a tiny loop benchmark be misleading on the JVM?",
+    "options": [
+      "JIT optimizations and warmup can change the measured work",
+      "Java clocks never advance",
+      "All loops are interpreted forever"
+    ],
+    "answer": 0,
+    "explanation": "Dead-code elimination, folding, and compilation state can dominate naive measurements.",
+    "source": "https://docs.oracle.com/en/java/javase/21/jfapi/flight-recorder-api-programmers-guide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-performance-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "performance",
+    "prompt": "Which observation most directly helps inspect blocked-thread states?",
+    "options": [
+      "Thread dumps",
+      "The source file line count",
+      "A Maven version number"
+    ],
+    "answer": 0,
+    "explanation": "Thread dumps expose thread states, stacks, and lock relationships at observation time.",
+    "source": "https://docs.oracle.com/en/java/javase/21/jfapi/flight-recorder-api-programmers-guide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-performance-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "performance",
+    "prompt": "Does higher throughput alone prove an optimization improved the service?",
+    "options": [
+      "No, also inspect latency, errors, and resource use",
+      "Yes, throughput subsumes correctness",
+      "Yes, if average CPU rose"
+    ],
+    "answer": 0,
+    "explanation": "An apparent throughput gain can hide tail latency, increased errors, or unsustainable resource use.",
+    "source": "https://docs.oracle.com/en/java/javase/21/jfapi/flight-recorder-api-programmers-guide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-reflection-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "reflection",
+    "prompt": "Which retention policy makes an annotation available to ordinary runtime reflection?",
+    "options": [
+      "RUNTIME",
+      "SOURCE",
+      "Only CLASS"
+    ],
+    "answer": 0,
+    "explanation": "RUNTIME retains the metadata for reflective access; SOURCE and CLASS have different lifetimes.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-reflection-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "reflection",
+    "prompt": "Does declaring an annotation automatically execute application behavior?",
+    "options": [
+      "No, a tool or framework must interpret it",
+      "Yes, every annotation is a thread",
+      "Yes, its constructor runs on every method call"
+    ],
+    "answer": 0,
+    "explanation": "Annotations are metadata rather than self-executing code.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-reflection-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "reflection",
+    "prompt": "Which lookup includes inherited public methods?",
+    "options": [
+      "Class.getMethods()",
+      "Class.getDeclaredMethods() only",
+      "Class.getDeclaredFields()"
+    ],
+    "answer": 0,
+    "explanation": "getMethods includes public methods from the class and inherited public methods.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-reflection-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "reflection",
+    "prompt": "A reflected method throws. Which wrapper can Method.invoke report?",
+    "options": [
+      "InvocationTargetException",
+      "Always InterruptedException",
+      "Only ClassNotFoundException"
+    ],
+    "answer": 0,
+    "explanation": "InvocationTargetException wraps an exception thrown by the invoked target; inspect its cause.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-reflection-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "reflection",
+    "prompt": "Can setAccessible always bypass Java module encapsulation?",
+    "options": [
+      "No",
+      "Yes, access controls never apply to reflection",
+      "Only if the object is final"
+    ],
+    "answer": 0,
+    "explanation": "Strong encapsulation can prevent deep reflective access unless the package is appropriately opened.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-modules-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "modules",
+    "prompt": "Which file declares a named Java module?",
+    "options": [
+      "module-info.java",
+      "package-lock.json",
+      "META-INF/manifest.java"
+    ],
+    "answer": 0,
+    "explanation": "The module descriptor declares its name, dependencies, exports, opens, and service relationships.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-7.html#jls-7.7",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-modules-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "modules",
+    "prompt": "Which directive grants deep reflective access to a package?",
+    "options": [
+      "opens",
+      "requires alone",
+      "exports always and exclusively"
+    ],
+    "answer": 0,
+    "explanation": "opens addresses runtime reflection; exports exposes a public API and is a different contract.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-7.html#jls-7.7",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-modules-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "modules",
+    "prompt": "Does exporting a package make its package-private members public?",
+    "options": [
+      "No",
+      "Yes, all access modifiers are ignored",
+      "Only on the module path"
+    ],
+    "answer": 0,
+    "explanation": "Java member access rules remain in force after the package is exported.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-7.html#jls-7.7",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-modules-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "modules",
+    "prompt": "Which facility discovers implementations of a Java service interface?",
+    "options": [
+      "ServiceLoader",
+      "String.intern",
+      "ObjectInputStream by default"
+    ],
+    "answer": 0,
+    "explanation": "ServiceLoader supports provider discovery separately from a concrete implementation dependency.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-7.html#jls-7.7",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-modules-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "modules",
+    "prompt": "What does jlink create?",
+    "options": [
+      "A custom runtime image assembled from modules",
+      "A source-code formatter",
+      "A database migration"
+    ],
+    "answer": 0,
+    "explanation": "jlink assembles a runtime containing selected modules and their required dependencies.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-7.html#jls-7.7",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-testing-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "testing",
+    "prompt": "Which makes a time-dependent service easier to test deterministically?",
+    "options": [
+      "Injecting Clock",
+      "Calling Thread.sleep in every test",
+      "Reading the system clock in hidden static code"
+    ],
+    "answer": 0,
+    "explanation": "A supplied clock lets tests control time without scheduling assumptions.",
+    "source": "https://docs.junit.org/current/user-guide/",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-testing-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "testing",
+    "prompt": "What is a better async test strategy than an arbitrary sleep?",
+    "options": [
+      "Await an explicit completion signal with a bounded timeout",
+      "Wait forever without a deadline",
+      "Rely on test execution order"
+    ],
+    "answer": 0,
+    "explanation": "A completion signal tests actual behavior and a timeout bounds a failed test.",
+    "source": "https://docs.junit.org/current/user-guide/",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-testing-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "testing",
+    "prompt": "Is 100% line coverage proof of correctness?",
+    "options": [
+      "No",
+      "Yes, all possible inputs are covered",
+      "Yes, if mocks were used"
+    ],
+    "answer": 0,
+    "explanation": "Coverage records executed code, not every input, branch interaction, invariant, or meaningful assertion.",
+    "source": "https://docs.junit.org/current/user-guide/",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-testing-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "testing",
+    "prompt": "Which JUnit Jupiter assertion verifies an expected exception?",
+    "options": [
+      "assertThrows",
+      "assertTrue around a swallowed exception",
+      "The Java assert keyword only"
+    ],
+    "answer": 0,
+    "explanation": "assertThrows fails when the expected type is not thrown and returns the exception for inspection.",
+    "source": "https://docs.junit.org/current/user-guide/",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-testing-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "testing",
+    "prompt": "Why should user-input validation not rely on Java language assert?",
+    "options": [
+      "Assertions can be disabled",
+      "Assertions are always checked exceptions",
+      "Assertions only work on strings"
+    ],
+    "answer": 0,
+    "explanation": "Use explicit validation and exceptions for required checks, regardless of runtime assertion flags.",
+    "source": "https://docs.junit.org/current/user-guide/",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-security-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "security",
+    "prompt": "Which generator fits security-sensitive token bytes?",
+    "options": [
+      "SecureRandom",
+      "Random with a timestamp seed",
+      "Math.random only"
+    ],
+    "answer": 0,
+    "explanation": "SecureRandom is intended for cryptographically strong random values; ordinary generators are not.",
+    "source": "https://www.oracle.com/java/technologies/javase/seccodeguide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-security-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "security",
+    "prompt": "Does validating a resource ID format authorize access to that resource?",
+    "options": [
+      "No",
+      "Yes, if the ID is numeric",
+      "Yes, if a DTO parsed successfully"
+    ],
+    "answer": 0,
+    "explanation": "Authorization must check the caller’s permission independently of syntax validation.",
+    "source": "https://www.oracle.com/java/technologies/javase/seccodeguide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-security-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "security",
+    "prompt": "Is unsalted SHA-256 alone an appropriate password-storage scheme?",
+    "options": [
+      "No",
+      "Yes, because hashes cannot be reversed",
+      "Only if stored in a final String"
+    ],
+    "answer": 0,
+    "explanation": "Password storage needs a suitable salted and costed password-hashing scheme, not a fast general hash alone.",
+    "source": "https://www.oracle.com/java/technologies/javase/seccodeguide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-security-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "security",
+    "prompt": "Which logging policy is safest for access tokens?",
+    "options": [
+      "Avoid recording the full token",
+      "Log all tokens for debugging",
+      "Only hide tokens on successful requests"
+    ],
+    "answer": 0,
+    "explanation": "Logs are another data store and can expose credentials long after the request completes.",
+    "source": "https://www.oracle.com/java/technologies/javase/seccodeguide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-security-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "security",
+    "prompt": "Why limit decompressed input size?",
+    "options": [
+      "A small compressed input can expand enough to exhaust resources",
+      "Java strings cannot represent compressed data",
+      "It guarantees all files are trustworthy"
+    ],
+    "answer": 0,
+    "explanation": "Expansion and parsing limits defend resource boundaries; compressed size alone does not bound work.",
+    "source": "https://www.oracle.com/java/technologies/javase/seccodeguide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-builds-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "builds",
+    "prompt": "Why commit a Maven or Gradle wrapper?",
+    "options": [
+      "To provide a consistent build-tool entry point and version",
+      "To bundle every user’s database",
+      "To eliminate all need for a JDK"
+    ],
+    "answer": 0,
+    "explanation": "The wrapper standardizes tool invocation; dependencies and a suitable Java toolchain still matter.",
+    "source": "https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-builds-2",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "builds",
+    "prompt": "What does constructor injection make explicit?",
+    "options": [
+      "Required collaborators",
+      "All private field values to every caller",
+      "The garbage collector algorithm"
+    ],
+    "answer": 0,
+    "explanation": "Constructor parameters expose dependencies and let tests provide controlled implementations.",
+    "source": "https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-builds-3",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "builds",
+    "prompt": "Are transitive dependencies part of the application’s dependency risk?",
+    "options": [
+      "Yes",
+      "No, only direct dependencies execute",
+      "Only when source files import them directly"
+    ],
+    "answer": 0,
+    "explanation": "Transitive libraries can run in the application and require version, compatibility, and security management.",
+    "source": "https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-builds-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "builds",
+    "prompt": "Can source compatibility and binary compatibility differ?",
+    "options": [
+      "Yes",
+      "No, both mean identical source text",
+      "Only for private local variables"
+    ],
+    "answer": 0,
+    "explanation": "Existing compiled clients link against binary descriptors; recompiling source is a different compatibility question.",
+    "source": "https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-builds-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "builds",
+    "prompt": "What does a clean-checkout CI build help detect?",
+    "options": [
+      "Undeclared local files and environment assumptions",
+      "Every possible runtime failure",
+      "Only Java syntax errors and nothing else"
+    ],
+    "answer": 0,
+    "explanation": "A clean build exposes dependencies on workstation-only state, though it does not prove all runtime behavior.",
+    "source": "https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-equality-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "equality",
+    "prompt": "Can unequal objects have identical hash codes?",
+    "options": [
+      "Yes",
+      "No, hashes are globally unique",
+      "Only if equals is broken"
+    ],
+    "answer": 0,
+    "explanation": "Hash collisions are allowed; only equal objects are required to share a hash code.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-equality-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "equality",
+    "prompt": "What does the default Object.equals compare?",
+    "options": [
+      "Object identity",
+      "Every field recursively",
+      "Only hashCode values"
+    ],
+    "answer": 0,
+    "explanation": "Object.equals uses reference identity unless a class overrides it.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-generics-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "generics",
+    "prompt": "Can ordinary code use value instanceof List<String>?",
+    "options": [
+      "No, that parameterized type is not reifiable",
+      "Yes, generics are fully preserved per list element",
+      "Only if the list has one element"
+    ],
+    "answer": 0,
+    "explanation": "Erasure prevents checking String element arguments this way. Use a reifiable type such as List<?>.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-generics-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "generics",
+    "prompt": "What can be assumed when reading from List<? super Integer>?",
+    "options": [
+      "Only Object without further checks",
+      "Always Integer",
+      "Always Number"
+    ],
+    "answer": 0,
+    "explanation": "The actual list could be List<Object>, so its existing contents are not guaranteed to be Integers.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-streams-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "streams",
+    "prompt": "Which operation maps each item to multiple values and flattens them?",
+    "options": [
+      "flatMap",
+      "filter",
+      "peek"
+    ],
+    "answer": 0,
+    "explanation": "flatMap combines mapped streams into one stream of their elements.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-streams-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "streams",
+    "prompt": "Why avoid updating a shared ArrayList inside a parallel forEach?",
+    "options": [
+      "Concurrent mutation can race and corrupt results",
+      "Streams prohibit every collection return value",
+      "ArrayList becomes immutable in parallel"
+    ],
+    "answer": 0,
+    "explanation": "Parallel actions can execute concurrently; shared mutable accumulation needs a correct collector or synchronization strategy.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-concurrency-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "concurrency",
+    "prompt": "Does a ConcurrentHashMap automatically make a mutable value object thread-safe?",
+    "options": [
+      "No",
+      "Yes, all value fields become volatile",
+      "Only if the key is a String"
+    ],
+    "answer": 0,
+    "explanation": "The map coordinates its own operations. The value object needs its own synchronization or immutability contract.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-concurrency-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "concurrency",
+    "prompt": "Does Thread.sleep establish a happens-before publication edge for shared data?",
+    "options": [
+      "No",
+      "Yes, if it lasts at least one second",
+      "Yes, after every scheduling change"
+    ],
+    "answer": 0,
+    "explanation": "Timing is not synchronization. Use documented happens-before relationships.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-exceptions-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "exceptions",
+    "prompt": "What is the effect of a return in finally when the try block is throwing?",
+    "options": [
+      "It can suppress the pending exception",
+      "It is always rejected by javac",
+      "It attaches the return value as a suppressed exception"
+    ],
+    "answer": 0,
+    "explanation": "An abruptly completing finally replaces the pending completion, hiding the original failure.",
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-exceptions-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "exceptions",
+    "prompt": "Which resource contract supports try-with-resources?",
+    "options": [
+      "AutoCloseable",
+      "Serializable",
+      "Comparable"
+    ],
+    "answer": 0,
+    "explanation": "A resource must implement AutoCloseable; its close method is called by the generated cleanup logic.",
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-runtime-4",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "runtime",
+    "prompt": "What does assigning one List variable to another normally copy?",
+    "options": [
+      "The reference value",
+      "All elements recursively",
+      "A new immutable list"
+    ],
+    "answer": 0,
+    "explanation": "Both variables alias the same list unless code explicitly creates another collection.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-runtime-5",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "runtime",
+    "prompt": "A method clears a mutable list passed by the caller. Can the caller observe the change?",
+    "options": [
+      "Yes, both references can identify the same list",
+      "No, pass-by-value always copies the object",
+      "Only if the parameter is static"
+    ],
+    "answer": 0,
+    "explanation": "Passing a reference by value still lets the method mutate the shared referenced object.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-types-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "types",
+    "prompt": "What is printed?",
+    "code": "int value = Integer.MAX_VALUE;\nSystem.out.println(value + 1);",
+    "options": [
+      "-2147483648",
+      "2147483648",
+      "ArithmeticException"
+    ],
+    "answer": 0,
+    "explanation": "Ordinary int addition wraps on overflow. Math.addExact would detect overflow instead.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-strings-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "strings",
+    "prompt": "What is printed?",
+    "code": "var text = new StringBuilder(\"java\");\ntext.append(\"!\");\nSystem.out.println(text.length());",
+    "options": [
+      "5",
+      "4",
+      "Compilation fails"
+    ],
+    "answer": 0,
+    "explanation": "StringBuilder is mutable, so append changes its contents before length is evaluated.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-runtime-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "runtime",
+    "prompt": "What is printed after update?",
+    "code": "static void update(int[] values) {\n    values[0] = 7;\n    values = new int[] {9};\n}\n// In the caller:\nint[] values = {1};\nupdate(values);\nSystem.out.println(values[0]);",
+    "options": [
+      "7",
+      "9",
+      "1"
+    ],
+    "answer": 0,
+    "explanation": "The mutation affects the shared array. Reassigning the local parameter does not replace the caller’s reference.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html",
+    "difficulty": "Foundation"
+  },
+  {
+    "id": "java-object-design-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "object-design",
+    "prompt": "Which overload is selected?",
+    "code": "static String pick(Object x) { return \"object\"; }\nstatic String pick(String x) { return \"string\"; }\n// In the caller:\nObject value = \"hello\";\nSystem.out.println(pick(value));",
+    "options": [
+      "The Object overload",
+      "The String overload",
+      "It is ambiguous"
+    ],
+    "answer": 0,
+    "explanation": "The argument’s compile-time type is Object, so overload resolution selects pick(Object).",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-exceptions-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "exceptions",
+    "prompt": "Which exception escapes run()?",
+    "code": "static void run() {\n    try {\n        throw new IllegalStateException(\"body\");\n    } finally {\n        throw new IllegalArgumentException(\"cleanup\");\n    }\n}",
+    "options": [
+      "IllegalArgumentException",
+      "IllegalStateException",
+      "Both are automatically suppressed exceptions"
+    ],
+    "answer": 0,
+    "explanation": "The abruptly completing finally replaces the pending exception. This is why throwing from finally can hide the original failure.",
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-records-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "records",
+    "prompt": "What happens when this record is created?",
+    "code": "record Count(int value) {\n    Count { if (value < 0) throw new IllegalArgumentException(); }\n}\n// In the caller:\nvar count = new Count(-1);",
+    "options": [
+      "The constructor throws IllegalArgumentException",
+      "The component defaults to zero",
+      "The compiler rejects all record validation"
+    ],
+    "answer": 0,
+    "explanation": "A compact constructor can validate arguments before implicit component assignment.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-pattern-matching-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "pattern-matching",
+    "prompt": "What does classify(\" \") return?",
+    "code": "static String classify(Object value) {\n    return switch (value) {\n        case String s when s.isBlank() -> \"blank\";\n        case String s -> \"text\";\n        default -> \"other\";\n    };\n}",
+    "options": [
+      "\"blank\"",
+      "\"text\"",
+      "\"other\""
+    ],
+    "answer": 0,
+    "explanation": "The guarded String case matches first because the string is blank.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collections-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collections",
+    "prompt": "What is printed?",
+    "code": "var original = new java.util.ArrayList<>(java.util.List.of(\"a\"));\nvar view = java.util.Collections.unmodifiableList(original);\noriginal.add(\"b\");\nSystem.out.println(view.size());",
+    "options": [
+      "2",
+      "1",
+      "UnsupportedOperationException from original.add"
+    ],
+    "answer": 0,
+    "explanation": "The wrapper is a view. Mutations through the modifiable original remain visible.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-equality-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "equality",
+    "prompt": "How many elements are in the set?",
+    "code": "record Key(int id) {}\nvar keys = new java.util.HashSet<Key>();\nkeys.add(new Key(1));\nkeys.add(new Key(1));\nSystem.out.println(keys.size());",
+    "options": [
+      "1",
+      "2",
+      "Compilation fails"
+    ],
+    "answer": 0,
+    "explanation": "The record’s generated value equality and hash code make these keys equal.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-generics-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "generics",
+    "prompt": "Does target.add(1) compile?",
+    "code": "java.util.List<? extends Number> target =\n    new java.util.ArrayList<Integer>();\ntarget.add(1);",
+    "options": [
+      "No, the captured element type is unknown",
+      "Yes, Integer extends Number",
+      "Yes, because the list is empty"
+    ],
+    "answer": 0,
+    "explanation": "The extends bound is a producer contract. The compiler cannot permit an Integer write for every possible Number subtype.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-lambdas-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "lambdas",
+    "prompt": "Does the lambda compile?",
+    "code": "int offset = 1;\njava.util.function.IntUnaryOperator add = n -> n + offset;\noffset = 2;",
+    "options": [
+      "No, offset is not effectively final",
+      "Yes, it returns n + 2",
+      "Yes, it always returns n + 1"
+    ],
+    "answer": 0,
+    "explanation": "A captured local variable cannot be reassigned, even after lambda construction.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-streams-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "streams",
+    "prompt": "What list is produced?",
+    "code": "var result = java.util.List.of(1, 2, 3, 4).stream()\n    .filter(n -> n % 2 == 0)\n    .map(n -> n * n)\n    .toList();",
+    "options": [
+      "[4, 16]",
+      "[2, 4]",
+      "[1, 4, 9, 16]"
+    ],
+    "answer": 0,
+    "explanation": "filter retains 2 and 4, then map squares each retained value.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-collectors-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "collectors",
+    "prompt": "What is the result for key 1?",
+    "code": "var counts = java.util.List.of(\"a\", \"b\", \"cc\").stream()\n    .collect(java.util.stream.Collectors.groupingBy(\n        String::length, java.util.stream.Collectors.counting()));\nSystem.out.println(counts.get(1));",
+    "options": [
+      "2",
+      "1",
+      "3"
+    ],
+    "answer": 0,
+    "explanation": "Two strings have length one; the downstream counting collector reports their count as a Long.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-optional-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "optional",
+    "prompt": "How many times is calls incremented?",
+    "code": "var calls = new java.util.concurrent.atomic.AtomicInteger();\nvar value = java.util.Optional.of(\"ready\");\nvalue.orElseGet(() -> { calls.incrementAndGet(); return \"fallback\"; });\nSystem.out.println(calls.get());",
+    "options": [
+      "0",
+      "1",
+      "2"
+    ],
+    "answer": 0,
+    "explanation": "The Optional is present, so the orElseGet supplier is not invoked.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-datetime-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "datetime",
+    "prompt": "What is printed?",
+    "code": "var date = java.time.LocalDate.of(2024, 2, 28);\ndate.plusDays(1);\nSystem.out.println(date);",
+    "options": [
+      "2024-02-28",
+      "2024-02-29",
+      "2024-03-01"
+    ],
+    "answer": 0,
+    "explanation": "LocalDate is immutable. The new date returned by plusDays was not assigned.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-io-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "io",
+    "prompt": "Is this stream closed reliably?",
+    "code": "try (var lines = java.nio.file.Files.lines(path)) {\n    return lines.limit(10).toList();\n}",
+    "options": [
+      "Yes, try-with-resources closes it even on return",
+      "No, return always bypasses close",
+      "Only if the file contains fewer than ten lines"
+    ],
+    "answer": 0,
+    "explanation": "Try-with-resources runs its cleanup when leaving the body, including via return or exception.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-http-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "http",
+    "prompt": "What does the configured timeout primarily bound?",
+    "code": "var client = java.net.http.HttpClient.newBuilder()\n    .connectTimeout(java.time.Duration.ofSeconds(2))\n    .build();",
+    "options": [
+      "Establishment of a new connection",
+      "Every complete response and all retries together",
+      "The database transaction lifetime"
+    ],
+    "answer": 0,
+    "explanation": "Connection timeout is not an end-to-end application deadline.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-jdbc-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jdbc",
+    "prompt": "Which part is represented by the placeholder?",
+    "code": "var statement = connection.prepareStatement(\n    \"SELECT name FROM users WHERE id = ?\");\nstatement.setLong(1, userId);",
+    "options": [
+      "The id data value",
+      "The users table name",
+      "The SELECT keyword"
+    ],
+    "answer": 0,
+    "explanation": "A prepared statement binds a data value into the parameter position, rather than substituting SQL structure.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-serialization-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "serialization",
+    "prompt": "What does this modifier directly affect?",
+    "code": "class Session implements java.io.Serializable {\n    transient String accessToken;\n}",
+    "options": [
+      "Default native serialization of accessToken",
+      "Every possible JSON mapper automatically",
+      "Whether accessToken can be assigned"
+    ],
+    "answer": 0,
+    "explanation": "transient affects default Java object serialization; other mapping libraries define their own policies.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ObjectInputStream.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-concurrency-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "concurrency",
+    "prompt": "What is printed after all threads join?",
+    "code": "var count = new java.util.concurrent.atomic.AtomicInteger();\nThread a = new Thread(() -> count.incrementAndGet());\nThread b = new Thread(() -> count.incrementAndGet());\na.start(); b.start();\na.join(); b.join();\nSystem.out.println(count.get());",
+    "options": [
+      "2",
+      "Always 1",
+      "Either 0 or 1 only"
+    ],
+    "answer": 0,
+    "explanation": "Both increments are atomic, and joining both threads waits for their completion.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-locks-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "locks",
+    "prompt": "Why is this placement of unlock correct?",
+    "code": "lock.lock();\ntry {\n    updateSharedState();\n} finally {\n    lock.unlock();\n}",
+    "options": [
+      "It releases the acquired lock even if update throws",
+      "It makes update free of all races automatically",
+      "It prevents every possible deadlock"
+    ],
+    "answer": 0,
+    "explanation": "The finally block preserves lock release on exceptional exit. The whole locking design still needs a valid invariant.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-executors-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "executors",
+    "prompt": "What does get() return?",
+    "code": "var executor = java.util.concurrent.Executors.newSingleThreadExecutor();\ntry {\n    var value = executor.submit(() -> 6 * 7);\n    System.out.println(value.get());\n} finally { executor.shutdown(); }",
+    "options": [
+      "42",
+      "A CompletableFuture object",
+      "null always"
+    ],
+    "answer": 0,
+    "explanation": "The Callable returns 42, and Future.get waits for and returns that result.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-futures-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "futures",
+    "prompt": "What is printed?",
+    "code": "var value = java.util.concurrent.CompletableFuture.completedFuture(3)\n    .thenApply(n -> n + 1)\n    .thenApply(n -> n * 2);\nSystem.out.println(value.join());",
+    "options": [
+      "8",
+      "7",
+      "6"
+    ],
+    "answer": 0,
+    "explanation": "The transformations are sequentially dependent: (3 + 1) * 2.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-virtual-threads-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "virtual-threads",
+    "prompt": "What is printed from the task?",
+    "code": "try (var executor = java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor()) {\n    var task = executor.submit(() -> Thread.currentThread().isVirtual());\n    System.out.println(task.get());\n}",
+    "options": [
+      "true",
+      "false",
+      "Compilation fails on Java 21 without preview flags"
+    ],
+    "answer": 0,
+    "explanation": "Virtual threads and this executor are standard Java 21 features, not preview APIs.",
+    "source": "https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-jvm-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "jvm",
+    "prompt": "Which tool would disassemble the compiled method bytecode?",
+    "code": "final class Sum {\n    static int add(int a, int b) { return a + b; }\n}",
+    "options": [
+      "javap -c Sum",
+      "jar --create Sum",
+      "java --list-modules"
+    ],
+    "answer": 0,
+    "explanation": "javap inspects class files, and -c includes disassembled bytecode.",
+    "source": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-memory-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "memory",
+    "prompt": "Why can the retained arrays remain uncollectible?",
+    "code": "static final java.util.List<byte[]> retained = new java.util.ArrayList<>();\n// Repeated by application code:\nretained.add(new byte[1024]);",
+    "options": [
+      "The static collection keeps them reachable",
+      "Arrays are never garbage collected",
+      "final forces immediate garbage collection"
+    ],
+    "answer": 0,
+    "explanation": "The root-reachable list keeps references to the arrays; application eviction is needed to bound retention.",
+    "source": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-performance-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "performance",
+    "prompt": "What problem can invalidate this timing experiment?",
+    "code": "long start = System.nanoTime();\nfor (int i = 0; i < 1_000_000; i++) {\n    int ignored = i * 2;\n}\nlong elapsed = System.nanoTime() - start;",
+    "options": [
+      "The optimizer can eliminate unused work",
+      "System.nanoTime measures only wall-clock dates",
+      "The loop always creates one million threads"
+    ],
+    "answer": 0,
+    "explanation": "Unused computation can disappear, so the measurement may not time the intended work.",
+    "source": "https://docs.oracle.com/en/java/javase/21/jfapi/flight-recorder-api-programmers-guide.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-testing-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "testing",
+    "prompt": "Why is this service easier to test?",
+    "code": "final class DayService {\n    private final java.time.Clock clock;\n    DayService(java.time.Clock clock) { this.clock = clock; }\n    java.time.LocalDate today() { return java.time.LocalDate.now(clock); }\n}",
+    "options": [
+      "A test can supply a fixed clock",
+      "All possible time zones are automatically tested",
+      "It cannot throw any exception"
+    ],
+    "answer": 0,
+    "explanation": "Injecting Clock exposes the time dependency and permits deterministic inputs.",
+    "source": "https://docs.junit.org/current/user-guide/",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-reflection-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "reflection",
+    "prompt": "Can this annotation be queried at runtime?",
+    "code": "@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE)\n@interface Note {}",
+    "options": [
+      "No, SOURCE retention is discarded during compilation",
+      "Yes, all annotations are runtime-visible",
+      "Only if the annotated class is public"
+    ],
+    "answer": 0,
+    "explanation": "SOURCE annotations are not retained in compiled class files for runtime reflection.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/package-summary.html",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-modules-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "modules",
+    "prompt": "What does this directive expose?",
+    "code": "module example.library {\n    exports example.api;\n}",
+    "options": [
+      "The public API of example.api to readable modules",
+      "Every private field to deep reflection",
+      "Every package in the module"
+    ],
+    "answer": 0,
+    "explanation": "exports applies to the named package’s public API; opens is the separate reflection mechanism.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-7.html#jls-7.7",
+    "difficulty": "Advanced"
+  },
+  {
+    "id": "java-builds-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "builds",
+    "prompt": "What design technique is shown?",
+    "code": "final class ReportService {\n    private final ReportRepository repository;\n    ReportService(ReportRepository repository) {\n        this.repository = repository;\n    }\n}",
+    "options": [
+      "Constructor injection",
+      "Global service location",
+      "Native serialization"
+    ],
+    "answer": 0,
+    "explanation": "The caller supplies the required collaborator explicitly through the constructor.",
+    "source": "https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html",
+    "difficulty": "Intermediate"
+  },
+  {
+    "id": "java-security-code-1",
+    "revision": 1,
+    "track": "java",
+    "java_version": "21",
+    "topic": "security",
+    "prompt": "Why is the token generator appropriate for unpredictable bytes?",
+    "code": "byte[] bytes = new byte[32];\nnew java.security.SecureRandom().nextBytes(bytes);",
+    "options": [
+      "It uses a cryptographically strong random generator",
+      "It guarantees the token is never logged",
+      "It automatically authorizes every request"
+    ],
+    "answer": 0,
+    "explanation": "SecureRandom is designed for security-sensitive randomness; storage, transport, and authorization remain separate concerns.",
+    "source": "https://www.oracle.com/java/technologies/javase/seccodeguide.html",
+    "difficulty": "Advanced"
   }
 ]

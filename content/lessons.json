@@ -1,35 +1,192 @@
 [
   {
-    "id": "equality",
-    "title": "Equality & collections",
-    "body": "Use value equality deliberately. Hash-based collections require equal objects to have equal hash codes. Keep fields used by equals and hashCode stable while an object is a key. HashMap does not guarantee iteration order; choose LinkedHashMap when insertion order matters.",
-    "code": "record UserId(long value) {}\nvar users = new HashMap<UserId, String>();\nusers.put(new UserId(7), \"Ada\");\nSystem.out.println(users.get(new UserId(7))); // Ada",
-    "pitfall": "A hash collision does not imply equality. Avoid mutable keys and do not assume HashMap is thread-safe.",
-    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html"
+    "id": "types",
+    "title": "Types, conversions & numeric precision",
+    "part": "01 · Language foundations",
+    "level": "Foundation",
+    "body": "Java’s type system makes many mistakes visible before execution, but numeric promotion, boxing, and overflow still deserve deliberate attention. Read an expression by identifying its operand types before considering its destination type.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Primitives and references",
+        "paragraphs": [
+          "The eight primitive types store numeric, character, or boolean values. Reference variables hold references or null. Fields receive default values; local variables must be definitely assigned before use. A wrapper such as Integer is a reference type, so unboxing a null Integer throws NullPointerException. Use primitives when absence has no domain meaning.",
+          "The var keyword infers a local variable’s static type from its initializer. It is not dynamic typing: var count = 1 produces an int that cannot later receive a String."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Promotion and overflow",
+        "paragraphs": [
+          "Integer division happens before assignment: double ratio = 5 / 2 stores 2.0. Make an operand floating-point to obtain 2.5. Multiplying two ints produces an int even when assigned to long, so cast an operand before multiplication. Ordinary integer arithmetic wraps on overflow; Math.addExact and related methods detect it."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Choosing a numeric model",
+        "paragraphs": [
+          "Binary floating-point is useful for measurements but cannot exactly represent many decimal fractions. For financial decimal rules, construct BigDecimal from a decimal string and choose an explicit scale and rounding mode. Its equals method considers scale, whereas compareTo compares numerical value. Decide which definition your domain requires."
+        ]
+      }
+    ],
+    "code": "int a = 50_000;\nlong square = (long) a * a; // 2,500,000,000\ndouble ratio = 5 / 2.0;    // 2.5\nvar price = new java.math.BigDecimal(\"0.10\");",
+    "pitfall": "Assigning an overflowing int expression to long does not repair it. Avoid comparing wrapper identity with == and avoid treating floating-point equality as decimal business equality.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html",
+    "objectives": [
+      "Primitives and references",
+      "Promotion and overflow",
+      "Choosing a numeric model"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 1,
+    "question_count": 6,
+    "summary": "Java’s type system makes many mistakes visible before execution, but numeric promotion, boxing, and overflow still deserve deliberate attention. Read an expression by identifying its operand types before considering its destination type.",
+    "takeaways": [
+      "The eight primitive types store numeric, character, or boolean values.",
+      "Assigning an overflowing int expression to long does not repair it. Avoid comparing wrapper identity with == and avoid treating floating-point equality as decimal business equality."
+    ]
   },
   {
-    "id": "generics",
-    "title": "Generics & variance",
-    "body": "Generic types are invariant: List<Integer> is not a List<Number>. Use extends for a producer you read from and super for a consumer you write to. A List<? extends Number> provides Number values but cannot safely accept an arbitrary Number.",
-    "code": "static void addOne(List<? super Integer> target) {\n    target.add(1);\n}\nstatic double first(List<? extends Number> source) {\n    return source.get(0).doubleValue();\n}",
-    "pitfall": "Do not use raw types to bypass compiler checks. Reading from a super-bound list only guarantees Object.",
-    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html"
+    "id": "strings",
+    "title": "Strings, text & regular expressions",
+    "part": "01 · Language foundations",
+    "level": "Foundation",
+    "body": "Text handling combines value semantics with encoding decisions. Know whether you are comparing content, counting UTF-16 units, building text, or matching a pattern; these are separate operations.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Identity and content",
+        "paragraphs": [
+          "String is immutable. Operations such as replace and toUpperCase return a value rather than changing the receiver. Use equals for content equality and Objects.equals when either operand may be null. Interning may make some references identical, but it is not a correctness strategy for content comparison."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Building and counting text",
+        "paragraphs": [
+          "StringBuilder supports mutable construction and is useful for repeated appends in a loop. It is not synchronized. String.length counts UTF-16 code units, not necessarily Unicode code points or visible grapheme clusters. For interchange, select an encoding such as UTF-8 explicitly rather than relying on environment assumptions."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Patterns and literal input",
+        "paragraphs": [
+          "Pattern represents a compiled regular expression; Matcher holds matching state. String.matches tests the entire input, while Matcher.find searches for a subsequence. Use Pattern.quote when user text must be treated literally. Complex patterns applied to untrusted input can be expensive; impose input limits and prefer simple patterns."
+        ]
+      }
+    ],
+    "code": "var left = new String(\"java\");\nvar right = new String(\"java\");\nSystem.out.println(left.equals(right)); // true\nSystem.out.println(left == right);      // false\nvar literal = java.util.regex.Pattern.compile(\n    java.util.regex.Pattern.quote(\"a+b\"));",
+    "pitfall": "Do not share a mutable StringBuilder or Matcher across threads without protection. A character count from length() is not a reliable visible-text length.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html",
+    "objectives": [
+      "Identity and content",
+      "Building and counting text",
+      "Patterns and literal input"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 2,
+    "question_count": 6,
+    "summary": "Text handling combines value semantics with encoding decisions. Know whether you are comparing content, counting UTF-16 units, building text, or matching a pattern; these are separate operations.",
+    "takeaways": [
+      "String is immutable.",
+      "Do not share a mutable StringBuilder or Matcher across threads without protection. A character count from length() is not a reliable visible-text length."
+    ]
   },
   {
-    "id": "streams",
-    "title": "Streams & transformations",
-    "body": "Intermediate stream operations are lazy. A terminal operation starts processing, and a stream cannot be reused after consumption. Prefer transformations without shared mutable side effects. Parallel execution is not automatically faster or safe.",
-    "code": "var result = List.of(1, 2, 3, 4).stream()\n    .filter(n -> n % 2 == 0)\n    .map(n -> n * 10)\n    .toList(); // [20, 40]",
-    "pitfall": "Stream.toList() returns an unmodifiable list. Do not use peek as a reliable mechanism for business side effects.",
-    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html"
+    "id": "runtime",
+    "title": "Runtime & object semantics",
+    "body": "Java passes arguments by value. For objects, the copied value is a reference: a method can mutate the referenced object, but assigning its parameter cannot replace the caller’s variable. Garbage collection reclaims unreachable objects; a reachable collection can retain unwanted objects indefinitely.",
+    "code": "static void change(StringBuilder text) {\n    text.append(\"!\");\n    text = new StringBuilder(\"replacement\");\n}\nvar text = new StringBuilder(\"Hi\");\nchange(text); // text now contains Hi!",
+    "pitfall": "Final prevents reassignment of a reference, not mutation of its object. Garbage collection does not close files or database connections.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html",
+    "part": "01 · Language foundations",
+    "level": "Foundation",
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Reference values are copied",
+        "paragraphs": [
+          "Every Java argument is passed by value. For objects, the value copied into the method parameter is a reference, not a deep copy. Mutating the object through that reference is visible to other aliases; reassigning the parameter only changes the local variable. This distinction explains why a method can append to a shared list but cannot swap the caller’s variables by reassignment."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Final and immutability",
+        "paragraphs": [
+          "A final variable can be assigned once under the language rules. It does not recursively freeze its object. Immutability requires control of reachable state, constructors, and accessors: copy mutable inputs, avoid exposing internal storage, and consider mutable elements inside collections. An unmodifiable view and an immutable value are different promises."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Reachability and lifetime",
+        "paragraphs": [
+          "The lifetime of a local variable is not a dependable resource-management API. Garbage collection considers reachability, and its timing is not deterministic. Long-lived static collections can keep unwanted objects reachable. Close external resources explicitly, and treat thread safety as a separate property from final references."
+        ]
+      }
+    ],
+    "objectives": [
+      "Reference values are copied",
+      "Final and immutability",
+      "Reachability and lifetime"
+    ],
+    "chapter": 3,
+    "question_count": 6,
+    "summary": "Java passes arguments by value. For objects, the copied value is a reference: a method can mutate the referenced object, but assigning its parameter cannot replace the caller’s variable. Garbage collection reclaims unreachable objects; a reachable collection can retain unwanted objects indefinitely.",
+    "takeaways": [
+      "Every Java argument is passed by value.",
+      "Final prevents reassignment of a reference, not mutation of its object. Garbage collection does not close files or database connections."
+    ]
   },
   {
-    "id": "concurrency",
-    "title": "Concurrency & visibility",
-    "body": "Visibility and atomicity are separate concerns. A volatile write is visible to a subsequent read of that field, but increment is a read-modify-write operation. Use an atomic operation or locking for shared counters. ConcurrentHashMap provides atomic per-key operations such as compute.",
-    "code": "var count = new java.util.concurrent.atomic.AtomicInteger();\ncount.incrementAndGet();\n\nvar counts = new java.util.concurrent.ConcurrentHashMap<String, Integer>();\ncounts.merge(\"requests\", 1, Integer::sum);",
-    "pitfall": "A thread-safe map does not make a separate get-then-put sequence atomic. Avoid reasoning about correctness using timing or sleep.",
-    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html"
+    "id": "object-design",
+    "title": "Classes, interfaces & polymorphism",
+    "part": "01 · Language foundations",
+    "level": "Intermediate",
+    "body": "Object-oriented Java is most useful when it expresses a clear contract. Separate what clients may rely on from implementation details, and distinguish runtime dispatch from compile-time overload selection.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Encapsulation and construction",
+        "paragraphs": [
+          "Private state protects invariants only when public methods preserve them. Validate inputs at the boundary and avoid leaking mutable internal collections. Constructors initialize objects; they are not inherited. Calling an overridable method from a constructor can dispatch to subclass behavior before subclass fields have initialized."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Overloading and overriding",
+        "paragraphs": [
+          "Overloading selects among different parameter lists using compile-time types. Overriding supplies a subtype implementation of an instance method and dispatches based on the runtime receiver. Static methods are hidden rather than dynamically overridden. An override cannot narrow access or broaden checked exceptions beyond the inherited contract."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Interfaces and composition",
+        "paragraphs": [
+          "An interface lets unrelated implementations share a contract; default methods provide inherited behavior. An abstract class can hold state and constructors but consumes the single class-inheritance relationship. Composition is a useful default when you need to vary behavior without promising that one object can substitute for another in every supported operation."
+        ]
+      }
+    ],
+    "code": "interface Notifier { void send(String message); }\nfinal class AlertService {\n    private final Notifier notifier;\n    AlertService(Notifier notifier) { this.notifier = notifier; }\n    void alert(String message) { notifier.send(message); }\n}",
+    "pitfall": "A subtype that throws on normal operations promised by its parent may violate substitutability even if it compiles. Use inheritance to preserve contracts, not merely to reuse lines of code.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html",
+    "objectives": [
+      "Encapsulation and construction",
+      "Overloading and overriding",
+      "Interfaces and composition"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 4,
+    "question_count": 6,
+    "summary": "Object-oriented Java is most useful when it expresses a clear contract. Separate what clients may rely on from implementation details, and distinguish runtime dispatch from compile-time overload selection.",
+    "takeaways": [
+      "Private state protects invariants only when public methods preserve them.",
+      "A subtype that throws on normal operations promised by its parent may violate substitutability even if it compiles. Use inheritance to preserve contracts, not merely to reuse lines of code."
+    ]
   },
   {
     "id": "exceptions",
@@ -37,14 +194,1314 @@
     "body": "Try-with-resources closes AutoCloseable resources even when the body throws. Resources close in reverse declaration order. If both the body and close throw, the body exception remains primary and close exceptions are suppressed. Checked exceptions must be caught or declared.",
     "code": "try (var reader = java.nio.file.Files.newBufferedReader(path)) {\n    return reader.readLine();\n} // reader closes on success or failure",
     "pitfall": "Avoid return in finally: it can hide exceptions or replace a pending return value. Preserve the original cause when wrapping failures.",
-    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"
+    "source": "https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html",
+    "part": "01 · Language foundations",
+    "level": "Intermediate",
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Failure contracts",
+        "paragraphs": [
+          "Checked exceptions must be caught or declared; RuntimeException and Error subtypes are unchecked. Choose exceptions that preserve domain meaning and the original cause. Catch the narrowest useful type at a boundary where recovery, translation, or reporting is possible, rather than scattering catch-all blocks that continue with invalid state."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Own and close resources",
+        "paragraphs": [
+          "Try-with-resources manages AutoCloseable resources and closes them in reverse declaration order, including when the body fails. If the body and close both throw, the body failure stays primary and close failures are suppressed. Inspect suppressed exceptions when diagnosing cleanup failures, and avoid accidentally transferring resource ownership without documenting it."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Cleanup without hiding the outcome",
+        "paragraphs": [
+          "A return or throw in finally can replace a pending return or exception. Use finally for necessary cleanup that cannot use try-with-resources, and preserve the original failure when cleanup also fails. Do not treat interruption as a routine retry: propagate it or restore the interrupt flag when appropriate so cancellation remains visible."
+        ]
+      }
+    ],
+    "objectives": [
+      "Failure contracts",
+      "Own and close resources",
+      "Cleanup without hiding the outcome"
+    ],
+    "chapter": 5,
+    "question_count": 6,
+    "summary": "Try-with-resources closes AutoCloseable resources even when the body throws. Resources close in reverse declaration order. If both the body and close throw, the body exception remains primary and close exceptions are suppressed. Checked exceptions must be caught or declared.",
+    "takeaways": [
+      "Checked exceptions must be caught or declared; RuntimeException and Error subtypes are unchecked.",
+      "Avoid return in finally: it can hide exceptions or replace a pending return value. Preserve the original cause when wrapping failures."
+    ]
   },
   {
-    "id": "runtime",
-    "title": "Runtime & object semantics",
-    "body": "Java passes arguments by value. For objects, the copied value is a reference: a method can mutate the referenced object, but assigning its parameter cannot replace the caller\u2019s variable. Garbage collection reclaims unreachable objects; a reachable collection can retain unwanted objects indefinitely.",
-    "code": "static void change(StringBuilder text) {\n    text.append(\"!\");\n    text = new StringBuilder(\"replacement\");\n}\nvar text = new StringBuilder(\"Hi\");\nchange(text); // text now contains Hi!",
-    "pitfall": "Final prevents reassignment of a reference, not mutation of its object. Garbage collection does not close files or database connections.",
-    "source": "https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html"
+    "id": "records",
+    "title": "Records, enums & sealed hierarchies",
+    "part": "01 · Language foundations",
+    "level": "Intermediate",
+    "body": "Modern Java gives domain models more precise vocabulary. Records represent data aggregates, enums model named finite values, and sealed types constrain which implementations belong to a hierarchy.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Records and defensive copies",
+        "paragraphs": [
+          "A record declares components and receives accessors, a canonical constructor, and value-oriented equals, hashCode, and toString implementations. Components become private final fields, but a component can still refer to a mutable object. Use a compact constructor to validate or copy input. A copied list is only shallowly immutable: mutable elements still need attention."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Enums with behavior",
+        "paragraphs": [
+          "An enum is more than a bag of strings. It can contain fields, constructors, and methods and is suitable for small stable sets of domain choices. Comparing enum values with == is appropriate. Do not persist ordinal values as a durable external identifier because reordering constants changes their ordinal positions."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Sealed domain boundaries",
+        "paragraphs": [
+          "A sealed class or interface names its permitted direct subtypes. A permitted class must continue the hierarchy explicitly as final, sealed, or non-sealed; records are implicitly final. This makes a closed set of cases visible to readers and exhaustive switches. Use it where you control the domain variants, rather than for open third-party extension."
+        ]
+      }
+    ],
+    "code": "record Team(java.util.List<String> members) {\n    Team { members = java.util.List.copyOf(members); }\n}\nsealed interface Result permits Success, Failure {}\nrecord Success(String value) implements Result {}\nrecord Failure(String message) implements Result {}",
+    "pitfall": "Records are not deeply immutable by default. Generated equality for an array component uses array reference equality rather than element-by-element equality.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10",
+    "objectives": [
+      "Records and defensive copies",
+      "Enums with behavior",
+      "Sealed domain boundaries"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 6,
+    "question_count": 6,
+    "summary": "Modern Java gives domain models more precise vocabulary. Records represent data aggregates, enums model named finite values, and sealed types constrain which implementations belong to a hierarchy.",
+    "takeaways": [
+      "A record declares components and receives accessors, a canonical constructor, and value-oriented equals, hashCode, and toString implementations.",
+      "Records are not deeply immutable by default. Generated equality for an array component uses array reference equality rather than element-by-element equality."
+    ]
+  },
+  {
+    "id": "pattern-matching",
+    "title": "Switch expressions & pattern matching",
+    "part": "01 · Language foundations",
+    "level": "Intermediate",
+    "body": "Java 21 supports switch expressions, type patterns, and record patterns without preview flags. These features make case analysis more explicit, but null handling and case ordering still need deliberate design.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Expressions produce values",
+        "paragraphs": [
+          "A switch expression must produce a value or throw for every possible input. Arrow rules avoid traditional colon-label fall-through. A block arm uses yield to provide its value. Exhaustiveness can come from a default arm or a complete enumeration of the supported cases."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Type and record patterns",
+        "paragraphs": [
+          "An instanceof pattern checks a type and introduces a scoped variable without a separate cast. Record patterns deconstruct a record into its components. Java 21 pattern switches can use when guards to express an additional condition after a type match. Put narrower cases before broader ones; an unconditional supertype pattern can dominate and make a later subtype case unreachable."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Null and domain evolution",
+        "paragraphs": [
+          "An ordinary switch over a reference does not treat null as default. Handle it explicitly using case null where supported, or reject it before switching. Exhaustive sealed-hierarchy switches help surface missing cases when source is recompiled after a new subtype is added. Mixed-version binaries still require deployment discipline."
+        ]
+      }
+    ],
+    "code": "static String describe(Object value) {\n    return switch (value) {\n        case null -> \"missing\";\n        case String s when s.isBlank() -> \"blank\";\n        case String s -> \"text: \" + s;\n        default -> \"other\";\n    };\n}",
+    "pitfall": "Do not assume default catches null. Preview features from later releases are outside this handbook’s Java 21 baseline.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.11",
+    "objectives": [
+      "Expressions produce values",
+      "Type and record patterns",
+      "Null and domain evolution"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 7,
+    "question_count": 6,
+    "summary": "Java 21 supports switch expressions, type patterns, and record patterns without preview flags. These features make case analysis more explicit, but null handling and case ordering still need deliberate design.",
+    "takeaways": [
+      "A switch expression must produce a value or throw for every possible input.",
+      "Do not assume default catches null. Preview features from later releases are outside this handbook’s Java 21 baseline."
+    ]
+  },
+  {
+    "id": "collections",
+    "title": "Choosing lists, sets, maps & queues",
+    "part": "02 · Data & functional Java",
+    "level": "Intermediate",
+    "body": "Choose a collection by the operations and guarantees you need, not by habit. Order, uniqueness, lookup cost, mutability, and concurrency are independent parts of its contract.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Lists and deques",
+        "paragraphs": [
+          "ArrayList offers constant-time indexed access and amortized constant-time appends, but inserting near its front shifts elements. LinkedList has linear-time indexed access; constant-time insertion assumes you already have a suitable node position through an iterator. ArrayDeque is a good general-purpose stack or FIFO queue and rejects null elements."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Set and map semantics",
+        "paragraphs": [
+          "Hash-based collections use equals and hashCode for membership. TreeSet and TreeMap use ordering comparisons, so a comparator that returns zero treats two values as equivalent for membership. Keep ordering consistent with equals when you need ordinary Set or Map equality semantics. Hash lookup is expected constant time under suitable hashing, not an unconditional guarantee."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Views and copies",
+        "paragraphs": [
+          "Collections.unmodifiableList creates a read-only view, so changes through the original list remain visible. List.copyOf produces an unmodifiable snapshot of the elements, rejects nulls, and does not deep-copy the elements. Arrays.asList is a fixed-size array-backed list: set is allowed but structural add and remove are not."
+        ]
+      }
+    ],
+    "code": "var queue = new java.util.ArrayDeque<String>();\nqueue.addLast(\"first\");\nqueue.addLast(\"second\");\nSystem.out.println(queue.removeFirst()); // first\nvar source = new java.util.ArrayList<>(java.util.List.of(\"a\"));\nvar snapshot = java.util.List.copyOf(source);",
+    "pitfall": "Fail-fast iterators are best-effort bug detectors, not a synchronization guarantee. Check collection contracts rather than inferring mutability from a method name.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/package-summary.html",
+    "objectives": [
+      "Lists and deques",
+      "Set and map semantics",
+      "Views and copies"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 8,
+    "question_count": 6,
+    "summary": "Choose a collection by the operations and guarantees you need, not by habit. Order, uniqueness, lookup cost, mutability, and concurrency are independent parts of its contract.",
+    "takeaways": [
+      "ArrayList offers constant-time indexed access and amortized constant-time appends, but inserting near its front shifts elements.",
+      "Fail-fast iterators are best-effort bug detectors, not a synchronization guarantee. Check collection contracts rather than inferring mutability from a method name."
+    ]
+  },
+  {
+    "id": "equality",
+    "title": "Equality & collections",
+    "body": "Use value equality deliberately. Hash-based collections require equal objects to have equal hash codes. Keep fields used by equals and hashCode stable while an object is a key. HashMap does not guarantee iteration order; choose LinkedHashMap when insertion order matters.",
+    "code": "record UserId(long value) {}\nvar users = new HashMap<UserId, String>();\nusers.put(new UserId(7), \"Ada\");\nSystem.out.println(users.get(new UserId(7))); // Ada",
+    "pitfall": "A hash collision does not imply equality. Avoid mutable keys and do not assume HashMap is thread-safe.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html",
+    "part": "02 · Data & functional Java",
+    "level": "Intermediate",
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "The equality contract",
+        "paragraphs": [
+          "Object.equals defaults to reference identity. A value class should define equality that is reflexive, symmetric, transitive, consistent, and false for null. If you override equals, also override hashCode so equal instances produce equal hashes. Unequal instances may still collide; a hash is not an object’s unique identifier."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Hash lookup and stable keys",
+        "paragraphs": [
+          "HashMap uses hashes to locate candidate entries and equality to distinguish keys. Mutating state that participates in a key’s hash or equality after insertion can make lookup unreliable. Records with stable immutable components are often suitable keys. Default HashMap has no encounter-order guarantee and is not safe for unsynchronized concurrent mutation."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Designing value objects",
+        "paragraphs": [
+          "Use only the state that defines domain identity, and preserve symmetry when inheritance is involved. Composition or final value classes often simplify the contract. Arrays need an explicit element-equality policy because their equals implementation is identity-based. Test both equality and hash-based collection behavior, including different-but-equal instances."
+        ]
+      }
+    ],
+    "objectives": [
+      "The equality contract",
+      "Hash lookup and stable keys",
+      "Designing value objects"
+    ],
+    "chapter": 9,
+    "question_count": 6,
+    "summary": "Use value equality deliberately. Hash-based collections require equal objects to have equal hash codes. Keep fields used by equals and hashCode stable while an object is a key. HashMap does not guarantee iteration order; choose LinkedHashMap when insertion order matters.",
+    "takeaways": [
+      "Object.equals defaults to reference identity.",
+      "A hash collision does not imply equality. Avoid mutable keys and do not assume HashMap is thread-safe."
+    ]
+  },
+  {
+    "id": "generics",
+    "title": "Generics & variance",
+    "body": "Generic types are invariant: List<Integer> is not a List<Number>. Use extends for a producer you read from and super for a consumer you write to. A List<? extends Number> provides Number values but cannot safely accept an arbitrary Number.",
+    "code": "static void addOne(List<? super Integer> target) {\n    target.add(1);\n}\nstatic double first(List<? extends Number> source) {\n    return source.get(0).doubleValue();\n}",
+    "pitfall": "Do not use raw types to bypass compiler checks. Reading from a super-bound list only guarantees Object.",
+    "source": "https://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html",
+    "part": "02 · Data & functional Java",
+    "level": "Advanced",
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Invariance protects writes",
+        "paragraphs": [
+          "Generic subtyping does not follow element subtyping: List<Integer> is not a List<Number>. If it were, a caller could add a Double to an Integer list. Arrays differ: they are covariant and enforce some type safety at runtime through ArrayStoreException. Prefer generics when compile-time guarantees can express the contract."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Producer extends, consumer super",
+        "paragraphs": [
+          "A List<? extends Number> can safely supply Numbers but cannot accept arbitrary Number values because its precise element type is unknown. A List<? super Integer> can receive Integers, while reading only guarantees Object. Wildcards express the direction of data flow; a named type parameter expresses relationships between several method arguments or the return type."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Erasure and heap pollution",
+        "paragraphs": [
+          "Java implements most generic typing through erasure. List<String> and List<Integer> do not carry distinct element type arguments available for ordinary runtime instanceof checks. Raw types and unchecked casts can bypass compile-time protection and lead to ClassCastException elsewhere. Keep unavoidable unchecked operations small, justified, and tested rather than suppressing warnings across an entire class."
+        ]
+      }
+    ],
+    "objectives": [
+      "Invariance protects writes",
+      "Producer extends, consumer super",
+      "Erasure and heap pollution"
+    ],
+    "chapter": 10,
+    "question_count": 6,
+    "summary": "Generic types are invariant: List<Integer> is not a List<Number>. Use extends for a producer you read from and super for a consumer you write to. A List<? extends Number> provides Number values but cannot safely accept an arbitrary Number.",
+    "takeaways": [
+      "Generic subtyping does not follow element subtyping: List<Integer> is not a List<Number>.",
+      "Do not use raw types to bypass compiler checks. Reading from a super-bound list only guarantees Object."
+    ]
+  },
+  {
+    "id": "lambdas",
+    "title": "Lambdas & functional interfaces",
+    "part": "02 · Data & functional Java",
+    "level": "Intermediate",
+    "body": "Lambdas are typed behavior values. They simplify small operations when the target interface, capture rules, and side effects are easy to understand.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "A target type for behavior",
+        "paragraphs": [
+          "A functional interface has one abstract method after the applicable inheritance rules are considered; default and static methods do not count toward that abstract-method requirement. Predicate tests a value, Function transforms one, Consumer performs an action, and Supplier produces a value. Method references are compact forms of compatible behavior, not a different execution model."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Capture and state",
+        "paragraphs": [
+          "Local variables captured by a lambda must be final or effectively final. This restricts reassignment of the variable, not mutation of a captured object. Capturing an ArrayList and appending to it still mutates shared state. Unlike an anonymous inner class, a lambda uses the enclosing meaning of this."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Composition and failure",
+        "paragraphs": [
+          "Function.andThen applies the receiver before the next function; compose applies the supplied function first. Predicate combinators can express short-circuit checks. Standard functional interfaces usually do not declare checked exceptions, so a checked operation needs a suitable boundary or a custom interface. Avoid hiding failures inside catch blocks just to satisfy a signature."
+        ]
+      }
+    ],
+    "code": "java.util.function.Predicate<String> nonBlank = s -> !s.isBlank();\njava.util.function.Function<String, Integer> length = String::length;\nvar sizes = java.util.List.of(\"a\", \"\", \"hello\").stream()\n    .filter(nonBlank).map(length).toList(); // [1, 5]",
+    "pitfall": "Effectively final does not imply thread-safe or immutable. A lambda can capture a mutable object that several threads then race to update.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27",
+    "objectives": [
+      "A target type for behavior",
+      "Capture and state",
+      "Composition and failure"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 11,
+    "question_count": 6,
+    "summary": "Lambdas are typed behavior values. They simplify small operations when the target interface, capture rules, and side effects are easy to understand.",
+    "takeaways": [
+      "A functional interface has one abstract method after the applicable inheritance rules are considered; default and static methods do not count toward that abstract-method requirement.",
+      "Effectively final does not imply thread-safe or immutable. A lambda can capture a mutable object that several threads then race to update."
+    ]
+  },
+  {
+    "id": "streams",
+    "title": "Streams & transformations",
+    "body": "Intermediate stream operations are lazy. A terminal operation starts processing, and a stream cannot be reused after consumption. Prefer transformations without shared mutable side effects. Parallel execution is not automatically faster or safe.",
+    "code": "var result = List.of(1, 2, 3, 4).stream()\n    .filter(n -> n % 2 == 0)\n    .map(n -> n * 10)\n    .toList(); // [20, 40]",
+    "pitfall": "Stream.toList() returns an unmodifiable list. Do not use peek as a reliable mechanism for business side effects.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html",
+    "part": "02 · Data & functional Java",
+    "level": "Intermediate",
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Describe a pipeline",
+        "paragraphs": [
+          "A stream connects a source to intermediate transformations and a terminal result. filter retains matching values, map transforms each value, and flatMap expands values into streams and flattens them. The stream itself is not a collection and does not own a reusable stored copy of its result."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Laziness and reuse",
+        "paragraphs": [
+          "Intermediate operations are lazy and evaluation is driven by the terminal operation. Short-circuiting operations such as anyMatch or limit can avoid traversing the whole source. Implementations can omit work when the result can be determined without it, so incidental side effects in peek are not a reliable business action. Obtain a new stream for each traversal."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Purity, order, and parallelism",
+        "paragraphs": [
+          "Avoid modifying the source during traversal or mutating shared state inside a parallel pipeline. Encounter order depends on the source and operations. Parallelism adds splitting, merging, and coordination overhead, so it needs a suitable workload. Stream.toList returns an unmodifiable list; it does not freeze mutable objects inside the result."
+        ]
+      }
+    ],
+    "objectives": [
+      "Describe a pipeline",
+      "Laziness and reuse",
+      "Purity, order, and parallelism"
+    ],
+    "chapter": 12,
+    "question_count": 6,
+    "summary": "Intermediate stream operations are lazy. A terminal operation starts processing, and a stream cannot be reused after consumption. Prefer transformations without shared mutable side effects. Parallel execution is not automatically faster or safe.",
+    "takeaways": [
+      "A stream connects a source to intermediate transformations and a terminal result.",
+      "Stream.toList() returns an unmodifiable list. Do not use peek as a reliable mechanism for business side effects."
+    ]
+  },
+  {
+    "id": "collectors",
+    "title": "Collectors, reduction & ordering",
+    "part": "02 · Data & functional Java",
+    "level": "Advanced",
+    "body": "A stream pipeline is a computation whose result depends on both the source and the reduction contract. Understand associativity, duplicate keys, and encounter order before reaching for parallel execution.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Reduction that can be combined",
+        "paragraphs": [
+          "reduce combines values using an identity and associative operation. An identity must not change a valid result: zero for addition, one for multiplication. Subtraction is not associative, so regrouping partial reductions can change its result. For mutable accumulation, use collect with independent result containers rather than a shared mutable reduce identity."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Grouping and duplicate keys",
+        "paragraphs": [
+          "groupingBy classifies values and supports downstream collectors such as counting and mapping. toMap without a merge function throws IllegalStateException if two mapped keys are equal. Supply a merge rule when collisions are expected, and make that rule meaningful for the domain rather than arbitrarily dropping data."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Order and collection contracts",
+        "paragraphs": [
+          "Encounter order comes from the source and pipeline operations. forEach on a parallel stream need not preserve it; forEachOrdered respects it when one exists. Collectors.toList makes no concrete-type or mutability guarantee, unlike Stream.toList’s documented unmodifiable result. Choose toCollection(ArrayList::new) when a mutable ArrayList is required."
+        ]
+      }
+    ],
+    "code": "var counts = java.util.List.of(\"a\", \"bb\", \"c\").stream()\n    .collect(java.util.stream.Collectors.groupingBy(\n        String::length, java.util.stream.Collectors.counting()));\n// {1=2, 2=1}; map iteration order is not promised",
+    "pitfall": "A correct sequential reduction can still be invalid in parallel if its combiner, identity, or side effects break the reduction contract.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Collectors.html",
+    "objectives": [
+      "Reduction that can be combined",
+      "Grouping and duplicate keys",
+      "Order and collection contracts"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 13,
+    "question_count": 6,
+    "summary": "A stream pipeline is a computation whose result depends on both the source and the reduction contract. Understand associativity, duplicate keys, and encounter order before reaching for parallel execution.",
+    "takeaways": [
+      "reduce combines values using an identity and associative operation.",
+      "A correct sequential reduction can still be invalid in parallel if its combiner, identity, or side effects break the reduction contract."
+    ]
+  },
+  {
+    "id": "optional",
+    "title": "Optional & absence contracts",
+    "part": "02 · Data & functional Java",
+    "level": "Intermediate",
+    "body": "Optional makes an absent return value explicit. It works best when it clarifies an API contract rather than replacing every field, parameter, or null check mechanically.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Creating and consuming values",
+        "paragraphs": [
+          "Optional.of rejects null, whereas ofNullable represents null as empty. Prefer returning Optional from a lookup that may find nothing. Do not return null from a method whose declared result is Optional. Use map, flatMap, filter, or an explicit terminal decision so callers can see what happens when the value is absent."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Transformations and flattening",
+        "paragraphs": [
+          "map turns a present value into another value and produces empty if the mapping returns null. flatMap is for a mapper that already returns Optional and avoids an Optional inside Optional. An empty Optional skips those mappers. This helps chain a customer lookup into an optional address lookup without nested presence checks."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Fallback cost and failure",
+        "paragraphs": [
+          "Arguments to orElse are evaluated before the call, even when the Optional is present. Use orElseGet for a fallback supplier that should run only on absence. Use orElseThrow when absence violates the caller’s requirement. Optional does not model every error: an unavailable database and a missing row are different outcomes."
+        ]
+      }
+    ],
+    "code": "java.util.Optional<String> name = java.util.Optional.of(\"Ada\");\nString display = name.map(String::toUpperCase)\n    .orElseGet(() -> \"Guest\");\nString required = name.orElseThrow();",
+    "pitfall": "Do not use Optional as a lock or rely on Optional identity. Avoid get() unless presence has already been established by the surrounding contract.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html",
+    "objectives": [
+      "Creating and consuming values",
+      "Transformations and flattening",
+      "Fallback cost and failure"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 14,
+    "question_count": 6,
+    "summary": "Optional makes an absent return value explicit. It works best when it clarifies an API contract rather than replacing every field, parameter, or null check mechanically.",
+    "takeaways": [
+      "Optional.of rejects null, whereas ofNullable represents null as empty.",
+      "Do not use Optional as a lock or rely on Optional identity. Avoid get() unless presence has already been established by the surrounding contract."
+    ]
+  },
+  {
+    "id": "datetime",
+    "title": "Dates, time zones & clocks",
+    "part": "03 · Standard library & persistence",
+    "level": "Intermediate",
+    "body": "Time bugs often start by representing different concepts with the same type. Model a calendar date, an instant, a local appointment, and elapsed time separately.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Choose the temporal meaning",
+        "paragraphs": [
+          "LocalDate represents a date without a time zone. LocalDateTime represents wall-clock fields without a zone or offset, so it does not identify one global instant. Instant is a point on the timeline. ZonedDateTime combines local fields with region rules, making it suitable when daylight-saving transitions matter."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Calendar arithmetic and elapsed time",
+        "paragraphs": [
+          "Duration models seconds and nanoseconds; Period models date-based years, months, and days. Adding one calendar day to a zoned time can differ from adding 24 elapsed hours during a daylight-saving transition. Some local times do not exist, and others occur twice. Decide how to resolve gaps and overlaps instead of assuming every day has 24 hours."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Testable and stable boundaries",
+        "paragraphs": [
+          "The java.time types used here are immutable. Store event timestamps as instants when you need cross-system ordering, while retaining a zone when the business rule is tied to local time. Inject Clock into code that asks for the current time so tests can be deterministic. DateTimeFormatter is immutable and reusable across threads."
+        ]
+      }
+    ],
+    "code": "var clock = java.time.Clock.fixed(\n    java.time.Instant.parse(\"2026-01-15T12:00:00Z\"),\n    java.time.ZoneId.of(\"Europe/Paris\"));\nvar today = java.time.LocalDate.now(clock);\nvar timestamp = java.time.Instant.now(clock);",
+    "pitfall": "Never silently use the server’s default zone for a user’s calendar rule. An offset such as +01:00 is not a full regional time-zone rule set.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/package-summary.html",
+    "objectives": [
+      "Choose the temporal meaning",
+      "Calendar arithmetic and elapsed time",
+      "Testable and stable boundaries"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 15,
+    "question_count": 6,
+    "summary": "Time bugs often start by representing different concepts with the same type. Model a calendar date, an instant, a local appointment, and elapsed time separately.",
+    "takeaways": [
+      "LocalDate represents a date without a time zone.",
+      "Never silently use the server’s default zone for a user’s calendar rule. An offset such as +01:00 is not a full regional time-zone rule set."
+    ]
+  },
+  {
+    "id": "io",
+    "title": "Files, paths & resource lifetimes",
+    "part": "03 · Standard library & persistence",
+    "level": "Intermediate",
+    "body": "File operations combine naming, encoding, resource ownership, and failure handling. Design for large inputs and errors rather than assuming every file fits in memory or every close happens automatically.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Paths are names, not open handles",
+        "paragraphs": [
+          "Path models a filesystem path; Files performs operations. resolve combines paths and normalize removes syntactic redundancies, but normalize does not resolve symbolic links. A lexical startsWith check alone cannot guarantee containment in an attacker-controlled filesystem. Specify an encoding explicitly when the file format defines one."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Streaming and closure",
+        "paragraphs": [
+          "readString and readAllLines load content into memory and fit small bounded files. Files.lines returns a lazily read stream backed by an open resource and must be closed with try-with-resources. Closing is necessary even if a terminal operation such as count has completed. The same ownership discipline applies to directory streams and channels."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Failure and replacement",
+        "paragraphs": [
+          "IOException is part of the normal contract for external storage. exists followed by open is a check-then-act race; perform the operation and handle its result. Atomic replacement depends on filesystem and provider support. ATOMIC_MOVE can fail when unsupported, so decide whether to reject, retry, or use a documented weaker fallback."
+        ]
+      }
+    ],
+    "code": "var path = java.nio.file.Path.of(\"events.txt\");\ntry (var lines = java.nio.file.Files.lines(\n        path, java.nio.charset.StandardCharsets.UTF_8)) {\n    long errors = lines.filter(s -> s.startsWith(\"ERROR\")).count();\n    System.out.println(errors);\n}",
+    "pitfall": "A stream terminal operation does not generally close an I/O-backed stream. Avoid using readAllBytes for unbounded user uploads.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html",
+    "objectives": [
+      "Paths are names, not open handles",
+      "Streaming and closure",
+      "Failure and replacement"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 16,
+    "question_count": 6,
+    "summary": "File operations combine naming, encoding, resource ownership, and failure handling. Design for large inputs and errors rather than assuming every file fits in memory or every close happens automatically.",
+    "takeaways": [
+      "Path models a filesystem path; Files performs operations.",
+      "A stream terminal operation does not generally close an I/O-backed stream. Avoid using readAllBytes for unbounded user uploads."
+    ]
+  },
+  {
+    "id": "http",
+    "title": "HTTP clients & resilient boundaries",
+    "part": "03 · Standard library & persistence",
+    "level": "Intermediate",
+    "body": "Java’s built-in HttpClient supports synchronous and asynchronous requests. Reliable use requires more than issuing a request: bound waiting, interpret status codes, and control retries and response size.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Reuse and configuration",
+        "paragraphs": [
+          "An HttpClient is immutable once built and can serve multiple requests. Reuse it to benefit from connection pooling. Configure a connection timeout on the client and a request timeout on requests where appropriate. These address different waits and do not by themselves implement an entire application-level deadline across retries."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Transport success is not business success",
+        "paragraphs": [
+          "A normally completed send can return a 404 or 500 response. Inspect statusCode and apply the endpoint’s response contract before parsing or treating the operation as successful. BodyHandlers.ofString buffers a body into memory; streaming handlers require careful resource consumption and closure. Bound response size for untrusted servers."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Retries and idempotency",
+        "paragraphs": [
+          "Retry only failures that are safe and useful to retry. A timed-out write may already have succeeded on the remote system, so blind retries can duplicate effects. Use idempotency keys where the remote protocol supports them, apply backoff and limits, and include time spent across all attempts in the caller’s budget. Preserve interruption when cancellation propagates through blocking code."
+        ]
+      }
+    ],
+    "code": "var client = java.net.http.HttpClient.newBuilder()\n    .connectTimeout(java.time.Duration.ofSeconds(2)).build();\nvar request = java.net.http.HttpRequest.newBuilder(\n        java.net.URI.create(\"https://example.com/\"))\n    .timeout(java.time.Duration.ofSeconds(5)).GET().build();\nvar response = client.send(request,\n    java.net.http.HttpResponse.BodyHandlers.ofString());\nint status = response.statusCode();",
+    "pitfall": "Async completion does not imply an HTTP 2xx response. A retry policy must respect the operation’s semantics, not merely the exception type.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html",
+    "objectives": [
+      "Reuse and configuration",
+      "Transport success is not business success",
+      "Retries and idempotency"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 17,
+    "question_count": 6,
+    "summary": "Java’s built-in HttpClient supports synchronous and asynchronous requests. Reliable use requires more than issuing a request: bound waiting, interpret status codes, and control retries and response size.",
+    "takeaways": [
+      "An HttpClient is immutable once built and can serve multiple requests.",
+      "Async completion does not imply an HTTP 2xx response. A retry policy must respect the operation’s semantics, not merely the exception type."
+    ]
+  },
+  {
+    "id": "jdbc",
+    "title": "JDBC, transactions & SQL boundaries",
+    "part": "03 · Standard library & persistence",
+    "level": "Advanced",
+    "body": "JDBC is a resource and transaction API, not a guarantee that every database behaves identically. Make ownership, parameter binding, commit boundaries, and isolation choices explicit.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Bind values and close resources",
+        "paragraphs": [
+          "PreparedStatement binds data values without concatenating them into SQL syntax. Placeholders cannot stand for arbitrary identifiers such as table names; validate those against an allowlist if they must vary. Close ResultSet, Statement, and Connection with try-with-resources. With a connection pool, closing a borrowed connection normally returns it to the pool."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Define the unit of work",
+        "paragraphs": [
+          "A new JDBC Connection defaults to auto-commit. Disable it when several statements must commit together, then explicitly commit on success or roll back on failure. Do not rely on close to decide what happens to an active transaction. A database transaction does not automatically include a remote HTTP operation, so cross-system workflows need an additional consistency design."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Isolation and capacity",
+        "paragraphs": [
+          "Isolation levels constrain anomalies but support and behavior vary by database. Ask what the application must protect, then verify with the actual engine. Keep transactions short to reduce lock duration and pool occupation. A pool caps simultaneous database sessions; more application threads do not create unlimited database throughput."
+        ]
+      }
+    ],
+    "code": "// connection is owned by this unit of work\nconnection.setAutoCommit(false);\ntry (var statement = connection.prepareStatement(\n        \"UPDATE accounts SET balance = balance - ? WHERE id = ?\")) {\n    statement.setBigDecimal(1, amount);\n    statement.setLong(2, accountId);\n    statement.executeUpdate();\n    connection.commit();\n} catch (java.sql.SQLException failure) {\n    try { connection.rollback(); }\n    catch (java.sql.SQLException rollback) { failure.addSuppressed(rollback); }\n    throw failure;\n}",
+    "pitfall": "Binding values is not a replacement for authorization. In pooled code, restore changed connection settings according to the pool contract before reuse.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html",
+    "objectives": [
+      "Bind values and close resources",
+      "Define the unit of work",
+      "Isolation and capacity"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 18,
+    "question_count": 6,
+    "summary": "JDBC is a resource and transaction API, not a guarantee that every database behaves identically. Make ownership, parameter binding, commit boundaries, and isolation choices explicit.",
+    "takeaways": [
+      "PreparedStatement binds data values without concatenating them into SQL syntax.",
+      "Binding values is not a replacement for authorization. In pooled code, restore changed connection settings according to the pool contract before reuse."
+    ]
+  },
+  {
+    "id": "serialization",
+    "title": "Serialization, DTOs & compatibility",
+    "part": "03 · Standard library & persistence",
+    "level": "Intermediate",
+    "body": "Data crossing a boundary needs an explicit representation. Separate transport contracts from internal objects, and treat input validation and schema evolution as design work.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "DTOs and schemas",
+        "paragraphs": [
+          "A data transfer object defines the values sent or received at a boundary. Records can express small immutable-by-reference DTOs, but they still need validation and a serialization library or explicit encoder. Java SE does not include a general-purpose JSON object mapper. Configure the chosen mapper’s unknown-field, date, null, and polymorphism policies rather than relying on accidental defaults."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Compatibility over time",
+        "paragraphs": [
+          "Adding an optional field can be compatible when old consumers tolerate unknown properties and new consumers define a default. Renaming a required field usually needs migration or versioning. Distinguish absent, explicit null, and an empty collection when they mean different things. Contract tests should exercise old and new representations, not just a round trip through one current implementation."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Native serialization risks",
+        "paragraphs": [
+          "Java ObjectInputStream reconstructs object graphs and can invoke class-specific behavior. Avoid native deserialization for untrusted data; use a constrained interchange format and validation instead. serialVersionUID participates in native class compatibility checks, but keeping it unchanged cannot make arbitrary schema or invariant changes safe. transient excludes a field from default native serialization, not automatically from JSON mappers."
+        ]
+      }
+    ],
+    "code": "record CreateUserRequest(String email) {\n    CreateUserRequest {\n        java.util.Objects.requireNonNull(email, \"email\");\n        if (email.isBlank()) throw new IllegalArgumentException(\"blank email\");\n    }\n}\n// Decode at the boundary using an explicitly configured JSON library.",
+    "pitfall": "Never assume a record is automatically a validated JSON contract. Avoid logging full serialized DTOs when they contain secrets or personal data.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/ObjectInputStream.html",
+    "objectives": [
+      "DTOs and schemas",
+      "Compatibility over time",
+      "Native serialization risks"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 19,
+    "question_count": 6,
+    "summary": "Data crossing a boundary needs an explicit representation. Separate transport contracts from internal objects, and treat input validation and schema evolution as design work.",
+    "takeaways": [
+      "A data transfer object defines the values sent or received at a boundary.",
+      "Never assume a record is automatically a validated JSON contract. Avoid logging full serialized DTOs when they contain secrets or personal data."
+    ]
+  },
+  {
+    "id": "concurrency",
+    "title": "Concurrency & visibility",
+    "body": "Visibility and atomicity are separate concerns. A volatile write is visible to a subsequent read of that field, but increment is a read-modify-write operation. Use an atomic operation or locking for shared counters. ConcurrentHashMap provides atomic per-key operations such as compute.",
+    "code": "var count = new java.util.concurrent.atomic.AtomicInteger();\ncount.incrementAndGet();\n\nvar counts = new java.util.concurrent.ConcurrentHashMap<String, Integer>();\ncounts.merge(\"requests\", 1, Integer::sum);",
+    "pitfall": "A thread-safe map does not make a separate get-then-put sequence atomic. Avoid reasoning about correctness using timing or sleep.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html",
+    "part": "04 · Concurrency in practice",
+    "level": "Advanced",
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Visibility is not atomicity",
+        "paragraphs": [
+          "A data race occurs when conflicting accesses are not correctly ordered and at least one writes. Volatile establishes visibility and ordering for the field, but count++ still consists of multiple operations. Use an atomic read-modify-write operation or protect the entire invariant with a lock. Separate atomics also do not automatically make a multi-field invariant atomic."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Safe publication",
+        "paragraphs": [
+          "A happens-before edge lets a reader rely on writes performed before the corresponding publication. Locks, volatile publication, thread start and join, and concurrent utilities provide such relationships under their contracts. Do not let this escape a constructor before initialization completes. Immutable objects simplify sharing but still require a sound publication model."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Concurrent collections",
+        "paragraphs": [
+          "ConcurrentHashMap provides per-key atomic operations such as compute and merge; a get followed by put is still a separate sequence. Its iterators are weakly consistent rather than a frozen snapshot. A thread-safe container does not make mutable values inside it thread-safe. Write down which state is protected by which operation before relying on a collection’s name."
+        ]
+      }
+    ],
+    "objectives": [
+      "Visibility is not atomicity",
+      "Safe publication",
+      "Concurrent collections"
+    ],
+    "chapter": 20,
+    "question_count": 6,
+    "summary": "Visibility and atomicity are separate concerns. A volatile write is visible to a subsequent read of that field, but increment is a read-modify-write operation. Use an atomic operation or locking for shared counters. ConcurrentHashMap provides atomic per-key operations such as compute.",
+    "takeaways": [
+      "A data race occurs when conflicting accesses are not correctly ordered and at least one writes.",
+      "A thread-safe map does not make a separate get-then-put sequence atomic. Avoid reasoning about correctness using timing or sleep."
+    ]
+  },
+  {
+    "id": "locks",
+    "title": "Locks, coordination & deadlock",
+    "part": "04 · Concurrency in practice",
+    "level": "Advanced",
+    "body": "Protect invariants rather than individual lines of code. A correct synchronization strategy identifies shared state, the lock guarding it, and the conditions under which a thread can proceed.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Mutual exclusion and visibility",
+        "paragraphs": [
+          "synchronized provides reentrant mutual exclusion on a monitor and a happens-before edge from unlock to a subsequent lock on that same monitor. It only coordinates code using that monitor. Guard every access required by the invariant; synchronizing writes but reading the fields without the corresponding visibility strategy can still be wrong."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Explicit locks and conditions",
+        "paragraphs": [
+          "ReentrantLock provides operations such as tryLock and interruptible acquisition. Release an acquired lock in finally, even when protected code fails. Condition.await and Object.wait release their associated lock while waiting and reacquire it before returning. Wait in a loop that rechecks the predicate because wakeups do not guarantee the condition now holds."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Avoiding cyclic waits",
+        "paragraphs": [
+          "A deadlock can occur when threads hold locks while waiting for each other’s locks. Establish a global acquisition order and avoid unknown callbacks or remote calls while holding locks. A fair lock can reduce barging but does not promise application-level fairness or higher throughput. Coordination utilities such as CountDownLatch can express one-shot phase completion more clearly than ad hoc waiting."
+        ]
+      }
+    ],
+    "code": "var lock = new java.util.concurrent.locks.ReentrantLock();\nlock.lock();\ntry {\n    // read and update the invariant guarded by this lock\n} finally {\n    lock.unlock();\n}",
+    "pitfall": "Sleep does not release a monitor and is not a visibility guarantee. Locking different objects cannot protect the same invariant by coincidence.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html",
+    "objectives": [
+      "Mutual exclusion and visibility",
+      "Explicit locks and conditions",
+      "Avoiding cyclic waits"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 21,
+    "question_count": 6,
+    "summary": "Protect invariants rather than individual lines of code. A correct synchronization strategy identifies shared state, the lock guarding it, and the conditions under which a thread can proceed.",
+    "takeaways": [
+      "synchronized provides reentrant mutual exclusion on a monitor and a happens-before edge from unlock to a subsequent lock on that same monitor.",
+      "Sleep does not release a monitor and is not a visibility guarantee. Locking different objects cannot protect the same invariant by coincidence."
+    ]
+  },
+  {
+    "id": "executors",
+    "title": "Executors, futures & interruption",
+    "part": "04 · Concurrency in practice",
+    "level": "Advanced",
+    "body": "Concurrency needs an ownership model: who starts work, who bounds it, who waits, and who stops it? Executors separate task submission from execution, but they do not decide those policies for you.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Capacity and queues",
+        "paragraphs": [
+          "A fixed pool limits active worker threads, not necessarily queued tasks. Executors.newFixedThreadPool uses an unbounded queue, so overload can accumulate memory and latency. A configured ThreadPoolExecutor can bound the queue and define a rejection policy. Size and isolate pools according to work and downstream limits rather than a universal thread-count formula."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Results and shutdown",
+        "paragraphs": [
+          "submit returns a Future whose get waits for the result and can report task failure through ExecutionException. A timed get bounds the caller’s wait, not the task’s lifetime. shutdown stops new submissions while allowing accepted work to finish; shutdownNow attempts interruption and returns waiting tasks, but does not guarantee that running tasks stop."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Cooperative cancellation",
+        "paragraphs": [
+          "Interruption is a request that code must cooperate with. Blocking interruptible operations throw InterruptedException and generally clear the interrupted status. If a method cannot propagate the exception, restoring the flag with Thread.currentThread().interrupt() preserves the signal. Do not swallow interruption and continue expensive work as though no cancellation was requested."
+        ]
+      }
+    ],
+    "code": "var executor = java.util.concurrent.Executors.newFixedThreadPool(2);\ntry {\n    var result = executor.submit(() -> 40 + 2);\n    System.out.println(result.get());\n} finally {\n    executor.shutdown();\n}",
+    "pitfall": "cancel(true) requests interruption; it cannot forcibly make arbitrary task code safe or responsive. Avoid blocking on tasks submitted to the same saturated small pool.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html",
+    "objectives": [
+      "Capacity and queues",
+      "Results and shutdown",
+      "Cooperative cancellation"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 22,
+    "question_count": 6,
+    "summary": "Concurrency needs an ownership model: who starts work, who bounds it, who waits, and who stops it? Executors separate task submission from execution, but they do not decide those policies for you.",
+    "takeaways": [
+      "A fixed pool limits active worker threads, not necessarily queued tasks.",
+      "cancel(true) requests interruption; it cannot forcibly make arbitrary task code safe or responsive. Avoid blocking on tasks submitted to the same saturated small pool."
+    ]
+  },
+  {
+    "id": "futures",
+    "title": "CompletableFuture & async composition",
+    "part": "04 · Concurrency in practice",
+    "level": "Advanced",
+    "body": "CompletableFuture models a result that can complete later and supports a graph of dependent operations. Composition, execution context, error recovery, and deadlines are separate decisions.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Map, compose, and combine",
+        "paragraphs": [
+          "thenApply transforms a completed value synchronously with respect to the completion chain. thenCompose flattens a function that returns another completion stage. thenCombine joins two independent results after both complete. Choosing the right operation keeps dependencies visible and avoids nested futures or unnecessary blocking joins."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Execution context",
+        "paragraphs": [
+          "A non-async continuation can run on the thread completing the prior stage or another thread completing it; do not assume a dedicated worker. Async overloads without an executor generally use the common ForkJoinPool. Supply an executor when workload isolation or blocking behavior requires one. A future is not itself proof that any work ran concurrently."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Failures and time budgets",
+        "paragraphs": [
+          "exceptionally maps failure into a recovery value, while handle receives either outcome and can transform it. whenComplete is primarily an observation hook and does not turn a failure into success by returning normally. join wraps exceptional completion in CompletionException. orTimeout marks completion as exceptional after a deadline, but does not necessarily interrupt the underlying operation; propagate cancellation and deadlines explicitly."
+        ]
+      }
+    ],
+    "code": "java.util.concurrent.CompletableFuture<Integer> first =\n    java.util.concurrent.CompletableFuture.completedFuture(20);\nvar answer = first.thenCompose(n ->\n    java.util.concurrent.CompletableFuture.completedFuture(n + 22));\nSystem.out.println(answer.join()); // 42",
+    "pitfall": "A timeout on a future is not a guarantee that a remote request or background computation stopped. Avoid blocking the common pool with unrelated slow I/O.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html",
+    "objectives": [
+      "Map, compose, and combine",
+      "Execution context",
+      "Failures and time budgets"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 23,
+    "question_count": 6,
+    "summary": "CompletableFuture models a result that can complete later and supports a graph of dependent operations. Composition, execution context, error recovery, and deadlines are separate decisions.",
+    "takeaways": [
+      "thenApply transforms a completed value synchronously with respect to the completion chain.",
+      "A timeout on a future is not a guarantee that a remote request or background computation stopped. Avoid blocking the common pool with unrelated slow I/O."
+    ]
+  },
+  {
+    "id": "virtual-threads",
+    "title": "Virtual threads & bounded concurrency",
+    "part": "04 · Concurrency in practice",
+    "level": "Advanced",
+    "body": "Virtual threads became a standard feature in Java 21. They make a thread-per-task style practical for many blocking workloads, but they do not remove CPU, memory, or downstream capacity limits.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Throughput rather than faster computation",
+        "paragraphs": [
+          "Virtual threads are JVM-managed threads scheduled onto carrier platform threads. Supported blocking operations can suspend a virtual thread so its carrier runs other work. This helps large numbers of waiting tasks; it does not make CPU instructions faster or increase the number of available processor cores. Keep CPU-intensive work appropriately bounded."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "One task, one virtual thread",
+        "paragraphs": [
+          "Use a virtual-thread-per-task executor rather than pooling virtual threads to reuse them. A pool of cheap threads is not the right limiter for scarce resources: use a semaphore or another explicit limit for database connections or remote API capacity. ThreadLocal still works, but expensive per-thread objects can multiply unexpectedly when thread counts rise."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Java 21 pinning and lifecycle",
+        "paragraphs": [
+          "In Java 21, blocking while executing inside synchronized or certain native code can pin a virtual thread to its carrier. Measure relevant contention and consider alternative lock structure where needed. This is version-specific behavior; later JDK changes must be checked separately. Virtual threads are daemon threads, so they do not by themselves keep the JVM alive after all non-daemon threads finish."
+        ]
+      }
+    ],
+    "code": "try (var executor = java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor()) {\n    var task = executor.submit(() -> {\n        Thread.sleep(java.time.Duration.ofMillis(10));\n        return \"done\";\n    });\n    System.out.println(task.get());\n} // executor close waits for submitted tasks",
+    "pitfall": "Do not pool virtual threads merely to limit access to a downstream service. Bound the scarce operation directly. This chapter intentionally describes Java 21 pinning behavior.",
+    "source": "https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html",
+    "objectives": [
+      "Throughput rather than faster computation",
+      "One task, one virtual thread",
+      "Java 21 pinning and lifecycle"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 24,
+    "question_count": 6,
+    "summary": "Virtual threads became a standard feature in Java 21. They make a thread-per-task style practical for many blocking workloads, but they do not remove CPU, memory, or downstream capacity limits.",
+    "takeaways": [
+      "Virtual threads are JVM-managed threads scheduled onto carrier platform threads.",
+      "Do not pool virtual threads merely to limit access to a downstream service. Bound the scarce operation directly. This chapter intentionally describes Java 21 pinning behavior."
+    ]
+  },
+  {
+    "id": "jvm",
+    "title": "Bytecode, class loading & initialization",
+    "part": "05 · JVM & diagnostics",
+    "level": "Advanced",
+    "body": "Java source, class files, and machine execution are distinct layers. Understanding their boundaries helps explain portability, initialization bugs, and runtime linkage failures.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "From compilation to execution",
+        "paragraphs": [
+          "javac compiles source into class files containing bytecode and metadata. A JVM loads and verifies classes, then executes them using an implementation strategy that may combine interpretation and JIT compilation. Newer bytecode is not automatically runnable on an older JVM. Compile with an appropriate --release value when targeting an older Java platform."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Loading and class identity",
+        "paragraphs": [
+          "Classes are loaded by class loaders. Runtime type identity includes the defining loader as well as the binary class name, so two loaders can define distinct types with the same textual name. Delegation patterns help keep platform types coherent, but custom loaders and application containers make loader boundaries relevant when diagnosing ClassCastException or linkage issues."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Initialization is separate",
+        "paragraphs": [
+          "Class loading does not always initialize a class. Initialization runs static field initializers and static blocks in source order after required superclass initialization. Reading a compile-time constant may not trigger initialization. Initialization failures can appear as ExceptionInInitializerError; later uses can report NoClassDefFoundError. Keep static initialization small and avoid blocking or circular initialization dependencies."
+        ]
+      }
+    ],
+    "code": "final class Configuration {\n    static final int DEFAULT_PORT = 8080; // compile-time constant\n    static final String HOME = System.getProperty(\"user.home\");\n    static { System.out.println(\"initialized\"); }\n}\n// javac --release 21 Example.java\n// javap -c Example",
+    "pitfall": "Do not equate NoClassDefFoundError with a missing JAR in every case; failed initialization is another possibility. Preserve the first failure in logs.",
+    "source": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html",
+    "objectives": [
+      "From compilation to execution",
+      "Loading and class identity",
+      "Initialization is separate"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 25,
+    "question_count": 6,
+    "summary": "Java source, class files, and machine execution are distinct layers. Understanding their boundaries helps explain portability, initialization bugs, and runtime linkage failures.",
+    "takeaways": [
+      "javac compiles source into class files containing bytecode and metadata.",
+      "Do not equate NoClassDefFoundError with a missing JAR in every case; failed initialization is another possibility. Preserve the first failure in logs."
+    ]
+  },
+  {
+    "id": "memory",
+    "title": "Heap, reachability & garbage collection",
+    "part": "05 · JVM & diagnostics",
+    "level": "Advanced",
+    "body": "Garbage collection automates reclamation of unreachable managed objects. It does not determine whether retained data is useful, close external resources, or eliminate the need to understand allocation and lifetime.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Reachability and retention",
+        "paragraphs": [
+          "An object that can be reached from a live root is generally not collectible, even if the application will never use it again. Static maps, listeners, caches, and uncleared ThreadLocal values can retain growing graphs. Cycles alone are not a leak when the entire cycle becomes unreachable. Start a retention investigation with who holds the references, not with a guess about collector choice."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Heap is not the whole process",
+        "paragraphs": [
+          "The Java heap stores managed object data, but process memory also includes metaspace, thread stacks, code cache, native allocations, and direct buffers. Increasing -Xmx does not address every OutOfMemoryError and can reduce headroom for native memory. StackOverflowError typically reflects exhausted thread stack space, often from excessive recursion."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Collectors and resource lifetimes",
+        "paragraphs": [
+          "Collector selection trades throughput, latency, CPU, and memory under a particular workload; measure pauses and allocation rather than promising a universal winner. System.gc is a request, not a guarantee that a collection occurs or useful memory is immediately returned. Use AutoCloseable for deterministic resource cleanup; finalization is deprecated for removal and cannot be relied on for timely release."
+        ]
+      }
+    ],
+    "code": "// Bound caches explicitly: eviction is an application policy.\nvar cache = new java.util.LinkedHashMap<String, byte[]>(16, 0.75f, true) {\n    @Override protected boolean removeEldestEntry(\n            java.util.Map.Entry<String, byte[]> eldest) {\n        return size() > 100;\n    }\n};\n// This example is not thread-safe and bounds entries, not bytes.",
+    "pitfall": "A heap dump can contain secrets and personal data. Collect and store it with the same care as production data.",
+    "source": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "objectives": [
+      "Reachability and retention",
+      "Heap is not the whole process",
+      "Collectors and resource lifetimes"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 26,
+    "question_count": 6,
+    "summary": "Garbage collection automates reclamation of unreachable managed objects. It does not determine whether retained data is useful, close external resources, or eliminate the need to understand allocation and lifetime.",
+    "takeaways": [
+      "An object that can be reached from a live root is generally not collectible, even if the application will never use it again.",
+      "A heap dump can contain secrets and personal data. Collect and store it with the same care as production data."
+    ]
+  },
+  {
+    "id": "performance",
+    "title": "Profiling, JFR & performance reasoning",
+    "part": "05 · JVM & diagnostics",
+    "level": "Advanced",
+    "body": "Performance engineering begins with an observable symptom and a representative workload. Distinguish CPU use, allocation, lock contention, I/O waits, and queueing before choosing a fix.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Measure the right outcome",
+        "paragraphs": [
+          "Throughput measures completed work per time; latency measures time per operation. Percentiles expose tail behavior hidden by averages. Test under realistic concurrency and input sizes, and watch error rates as well as speed. A system that drops work may appear faster while providing worse service."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Find evidence with JVM tools",
+        "paragraphs": [
+          "Thread dumps show what threads are doing at a point in time; repeated dumps can reveal persistent contention or waits. Java Flight Recorder collects runtime events and supports diagnosing allocation, locks, CPU, and other activity. Heap dumps explain retained object graphs. Each tool answers a different question; avoid collecting a large heap dump when the immediate issue is blocked threads."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Benchmark the runtime, not the optimizer",
+        "paragraphs": [
+          "JIT compilation, warmup, garbage collection, constant folding, and dead-code elimination distort naive nanoTime loops. JMH helps structure JVM microbenchmarks with warmup, forks, and result consumption. Benchmark representative work and validate conclusions in the actual application; a microbenchmark cannot measure your database or network workload by implication."
+        ]
+      }
+    ],
+    "code": "// Run in a terminal against the JVM process, not in Java source:\n// jcmd <pid> Thread.print\n// jcmd <pid> JFR.start name=sample duration=60s filename=sample.jfr\n// jcmd <pid> GC.heap_info\n// Check command availability for your JDK and permissions.",
+    "pitfall": "An average request duration can conceal a severe p99 regression. Avoid asserting that a collection, collector, or threading style is faster without a measured workload.",
+    "source": "https://docs.oracle.com/en/java/javase/21/jfapi/flight-recorder-api-programmers-guide.html",
+    "objectives": [
+      "Measure the right outcome",
+      "Find evidence with JVM tools",
+      "Benchmark the runtime, not the optimizer"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 27,
+    "question_count": 6,
+    "summary": "Performance engineering begins with an observable symptom and a representative workload. Distinguish CPU use, allocation, lock contention, I/O waits, and queueing before choosing a fix.",
+    "takeaways": [
+      "Throughput measures completed work per time; latency measures time per operation.",
+      "An average request duration can conceal a severe p99 regression. Avoid asserting that a collection, collector, or threading style is faster without a measured workload."
+    ]
+  },
+  {
+    "id": "testing",
+    "title": "Testing contracts & deterministic code",
+    "part": "06 · Building reliable applications",
+    "level": "Intermediate",
+    "body": "Good tests make a behavior contract concrete. Focus on meaningful outputs, boundaries, failures, and invariants rather than mirroring the private implementation.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Choose the boundary",
+        "paragraphs": [
+          "Unit tests isolate a small behavior, while integration tests verify collaboration with real boundaries such as a database or HTTP service. Test doubles are useful for controlling expensive or nondeterministic dependencies, but too much interaction mocking can freeze an implementation. Keep at least some tests against the real contract at the boundary."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Design for determinism",
+        "paragraphs": [
+          "Inject time, randomness, and external clients rather than reading them from hidden global state. Use temporary directories and rollback or isolated databases to avoid order dependence. For asynchronous code, await a meaningful completion signal with a bounded timeout rather than sleeping for an assumed scheduling duration. Parameterized tests express multiple examples of the same rule."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Assertions that reveal behavior",
+        "paragraphs": [
+          "Assert the outcome and relevant side effects, including error paths. In JUnit Jupiter, assertThrows checks an expected exception and returns it for further inspection. Assertions should remain active in the test framework; Java’s language assert can be disabled in normal execution and is unsuitable for validating user input. Coverage is a gap-finding signal, not a proof of correctness."
+        ]
+      }
+    ],
+    "code": "// JUnit Jupiter; requires a JUnit dependency\n@Test\nvoid rejectsBlankName() {\n    var error = assertThrows(IllegalArgumentException.class,\n        () -> new User(\" \"));\n    assertEquals(\"blank name\", error.getMessage());\n}\n// Inject Clock into time-dependent services instead of sleeping.",
+    "pitfall": "A test that only verifies the mock was called may miss incorrect returned data. Avoid timing-sensitive sleeps and tests that depend on previous test runs.",
+    "source": "https://docs.junit.org/current/user-guide/",
+    "objectives": [
+      "Choose the boundary",
+      "Design for determinism",
+      "Assertions that reveal behavior"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 28,
+    "question_count": 6,
+    "summary": "Good tests make a behavior contract concrete. Focus on meaningful outputs, boundaries, failures, and invariants rather than mirroring the private implementation.",
+    "takeaways": [
+      "Unit tests isolate a small behavior, while integration tests verify collaboration with real boundaries such as a database or HTTP service.",
+      "A test that only verifies the mock was called may miss incorrect returned data. Avoid timing-sensitive sleeps and tests that depend on previous test runs."
+    ]
+  },
+  {
+    "id": "reflection",
+    "title": "Annotations, reflection & access",
+    "part": "06 · Building reliable applications",
+    "level": "Advanced",
+    "body": "Reflection exposes runtime type metadata and invocation APIs. It powers frameworks, but it also moves some checks from compilation to execution and interacts with module encapsulation.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Metadata lifetime",
+        "paragraphs": [
+          "Annotations declare metadata and can be limited to particular targets. RetentionPolicy.SOURCE is discarded by compilation, CLASS is recorded in class files without general runtime-reflection availability, and RUNTIME makes an annotation available to reflection. An annotation does not execute behavior by itself; a processor, framework, or tool must interpret it."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Reflective lookup and invocation",
+        "paragraphs": [
+          "Class and Method APIs let code inspect members and invoke them dynamically. getDeclaredMethods includes methods declared directly on the class regardless of access but excludes inherited methods; getMethods includes public methods including inherited ones. Reflective target failures can be wrapped in InvocationTargetException, so inspect the cause instead of reporting only the wrapper."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Encapsulation still matters",
+        "paragraphs": [
+          "setAccessible is not an unconditional bypass for module boundaries. Strong encapsulation can require a package to be opened for deep reflection, and access can still be denied. Prefer ordinary interfaces when possible; use reflection at controlled boundaries with validated names and clear failure handling. Annotation processing at compile time can sometimes replace expensive or fragile runtime discovery."
+        ]
+      }
+    ],
+    "code": "@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)\n@java.lang.annotation.Target(java.lang.annotation.ElementType.TYPE)\n@interface Component {}\n\n@Component final class Worker {}\nboolean present = Worker.class.isAnnotationPresent(Component.class);",
+    "pitfall": "Do not select arbitrary classes or methods directly from untrusted input. Reflection exceptions often describe a contract mismatch rather than a transient error to retry.",
+    "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/package-summary.html",
+    "objectives": [
+      "Metadata lifetime",
+      "Reflective lookup and invocation",
+      "Encapsulation still matters"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 29,
+    "question_count": 6,
+    "summary": "Reflection exposes runtime type metadata and invocation APIs. It powers frameworks, but it also moves some checks from compilation to execution and interacts with module encapsulation.",
+    "takeaways": [
+      "Annotations declare metadata and can be limited to particular targets.",
+      "Do not select arbitrary classes or methods directly from untrusted input. Reflection exceptions often describe a contract mismatch rather than a transient error to retry."
+    ]
+  },
+  {
+    "id": "modules",
+    "title": "Packages, modules & service loading",
+    "part": "06 · Building reliable applications",
+    "level": "Advanced",
+    "body": "Packages organize types, while modules describe dependencies and encapsulation across packages. Service loading adds an extension mechanism that separates a service contract from its providers.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Classpath and module path",
+        "paragraphs": [
+          "Classpath code commonly runs in the unnamed module. A named module has a module-info descriptor and runs on the module path with explicit readability relationships. A module requires another module to read it and consumes its exported public API. Package-private access still matters; exporting a package does not make every member public."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Exports versus opens",
+        "paragraphs": [
+          "exports exposes a package’s public API to readable modules. opens permits deep reflection into a package at runtime and does not serve the same purpose as a source-level export. Qualified exports and opens restrict access to named targets. Keep boundaries narrow so internal implementation packages can evolve without creating accidental public contracts."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Providers and runtime images",
+        "paragraphs": [
+          "ServiceLoader discovers implementations of a shared service interface. Named modules declare uses on the consumer and provides ... with ... on the provider. jdeps can inspect dependencies and jlink can assemble a runtime image from modules. A custom image improves packaging control but still needs regular JDK security updates and compatibility testing."
+        ]
+      }
+    ],
+    "code": "// module-info.java for a consumer module\nmodule example.application {\n    requires java.sql;\n    uses example.spi.Formatter;\n    exports example.spi;\n}\n// In application code:\n// ServiceLoader.load(Formatter.class)",
+    "pitfall": "Opening a package for a framework is a deliberate encapsulation tradeoff. Do not solve every reflective failure by opening the entire application.",
+    "source": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-7.html#jls-7.7",
+    "objectives": [
+      "Classpath and module path",
+      "Exports versus opens",
+      "Providers and runtime images"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 30,
+    "question_count": 6,
+    "summary": "Packages organize types, while modules describe dependencies and encapsulation across packages. Service loading adds an extension mechanism that separates a service contract from its providers.",
+    "takeaways": [
+      "Classpath code commonly runs in the unnamed module.",
+      "Opening a package for a framework is a deliberate encapsulation tradeoff. Do not solve every reflective failure by opening the entire application."
+    ]
+  },
+  {
+    "id": "builds",
+    "title": "Builds, dependencies & API design",
+    "part": "06 · Building reliable applications",
+    "level": "Intermediate",
+    "body": "A maintainable Java application has a repeatable build and explicit boundaries. Dependency management, compatibility, and simple design choices matter as much as language syntax.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Reproducible build inputs",
+        "paragraphs": [
+          "Use a checked-in Maven or Gradle wrapper so contributors invoke the intended build-tool version. Declare dependencies explicitly and manage versions coherently; transitive dependencies are still part of the running application. Toolchains or compiler release settings make the intended Java target clear. CI should run from a clean checkout to reveal accidental local dependencies."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Separate responsibilities",
+        "paragraphs": [
+          "Keep domain rules independent of transport and persistence details where that separation helps testing and evolution. Constructor injection makes required collaborators explicit and allows replacement in tests without hidden global state. Prefer a small number of clear abstractions over an interface for every class. Immutability and narrow public APIs reduce the number of states callers must understand."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Compatibility and operational contracts",
+        "paragraphs": [
+          "Source compatibility, binary compatibility, and behavioral compatibility are related but distinct. Changing a public method’s descriptor can break existing compiled clients even if source edits are straightforward. Document error behavior, nullability, ownership, and thread safety as part of an API. Build and deploy one coherent artifact, and do not make callers guess which implementation detail is stable."
+        ]
+      }
+    ],
+    "code": "interface UserRepository {\n    java.util.Optional<String> findName(long id);\n}\nfinal class GreetingService {\n    private final UserRepository users;\n    GreetingService(UserRepository users) { this.users = users; }\n    String greet(long id) { return \"Hello \" + users.findName(id).orElse(\"guest\"); }\n}",
+    "pitfall": "A dependency version in a build file is not proof that it is secure or compatible. Test upgrades and examine the resolved dependency graph.",
+    "source": "https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html",
+    "objectives": [
+      "Reproducible build inputs",
+      "Separate responsibilities",
+      "Compatibility and operational contracts"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 31,
+    "question_count": 6,
+    "summary": "A maintainable Java application has a repeatable build and explicit boundaries. Dependency management, compatibility, and simple design choices matter as much as language syntax.",
+    "takeaways": [
+      "Use a checked-in Maven or Gradle wrapper so contributors invoke the intended build-tool version.",
+      "A dependency version in a build file is not proof that it is secure or compatible. Test upgrades and examine the resolved dependency graph."
+    ]
+  },
+  {
+    "id": "security",
+    "title": "Secure Java boundaries & input handling",
+    "part": "06 · Building reliable applications",
+    "level": "Advanced",
+    "body": "Security starts with explicit trust boundaries and consistent validation. A safe Java implementation still needs authorization, resource limits, careful logging, and a deployment policy for updates.",
+    "sections": [
+      {
+        "id": "section-1",
+        "title": "Validate and authorize separately",
+        "paragraphs": [
+          "Validation asks whether input has an acceptable shape and value; authorization asks whether this caller may perform this action on this resource. Passing a format check does not grant ownership. Bind SQL values, encode output for its destination, and avoid constructing commands from user-controlled text. Different contexts need different defenses; there is no universal sanitize method."
+        ]
+      },
+      {
+        "id": "section-2",
+        "title": "Secrets and randomness",
+        "paragraphs": [
+          "Use SecureRandom for security-sensitive random values. Ordinary Random is designed for simulation and sampling, not unpredictable secrets. Keep credentials outside source control and avoid logging tokens, passwords, or full sensitive payloads. Password storage requires a suitable salted, costed password-hashing scheme through a vetted implementation, not plain SHA-256."
+        ]
+      },
+      {
+        "id": "section-3",
+        "title": "Paths, input size, and dependencies",
+        "paragraphs": [
+          "Path normalization alone does not defeat symbolic-link traversal or races in attacker-controlled directories. Limit input size, nesting, decompression expansion, and execution time before unbounded resource use becomes possible. Keep JDKs and libraries patched, and reduce enabled features such as unrestricted deserialization and arbitrary reflective class loading."
+        ]
+      }
+    ],
+    "code": "byte[] tokenBytes = new byte[32];\nnew java.security.SecureRandom().nextBytes(tokenBytes);\nString token = java.util.Base64.getUrlEncoder()\n    .withoutPadding().encodeToString(tokenBytes);\n// Store and transmit tokens according to the application threat model.",
+    "pitfall": "A random token is not automatically a complete authentication system. Its storage, lifetime, transport, revocation, and logging policies still matter.",
+    "source": "https://www.oracle.com/java/technologies/javase/seccodeguide.html",
+    "objectives": [
+      "Validate and authorize separately",
+      "Secrets and randomness",
+      "Paths, input size, and dependencies"
+    ],
+    "java_version": "21",
+    "reviewed": "2026-11-19",
+    "chapter": 32,
+    "question_count": 6,
+    "summary": "Security starts with explicit trust boundaries and consistent validation. A safe Java implementation still needs authorization, resource limits, careful logging, and a deployment policy for updates.",
+    "takeaways": [
+      "Validation asks whether input has an acceptable shape and value; authorization asks whether this caller may perform this action on this resource.",
+      "A random token is not automatically a complete authentication system. Its storage, lifetime, transport, revocation, and logging policies still matter."
+    ]
   }
 ]

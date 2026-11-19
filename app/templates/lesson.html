@@ -1,1 +1,16 @@
-{% extends 'base.html' %}{% block content %}<a class="text-link" href="/lessons">← All lessons</a><p class="eyebrow">JAVA 21 · FIELD NOTES</p><h1>{{ lesson.title }}</h1><article class="card"><h2>The idea</h2><p>{{ lesson.body }}</p><h2>In code</h2><pre><code>{{ lesson.code }}</code></pre><h2>Watch out for</h2><p>{{ lesson.pitfall }}</p><a class="text-link" href="{{ lesson.source }}" target="_blank" rel="noopener noreferrer">Read the official Java documentation ↗</a></article><form action="/practice" method="post"><input type="hidden" name="topic" value="{{ lesson.id }}"><button>Practice this topic →</button></form>{% endblock %}
+{% extends 'base.html' %}{% block content %}
+<a class="text-link" href="/lessons">← Table of contents</a>
+<p class="eyebrow">{{ lesson.part }} · CHAPTER {{ '%02d'|format(lesson.chapter) }}</p>
+<h1>{{ lesson.title }}</h1><p class="lead">{{ lesson.body }}</p>
+<p class="muted">Java {{ lesson.java_version }} · {{ lesson.level }} · {{ practice_count }} practice questions</p>
+<div class="reading-layout">
+<aside class="chapter-outline"><nav aria-label="Chapter sections"><p class="eyebrow">IN THIS CHAPTER</p>{% for section in lesson.sections %}<a href="#{{ section.id }}">{{ section.title }}</a>{% endfor %}<a href="#example">Worked example</a><a href="#pitfalls">Common pitfalls</a><a href="#practice">Check your understanding</a></nav></aside>
+<article class="chapter-body">
+{% for section in lesson.sections %}<section id="{{ section.id }}"><h2>{{ section.title }}</h2>{% for paragraph in section.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}</section>{% endfor %}
+<section id="example"><h2>Worked example</h2><p class="muted">{{ 'Commands and diagnostic examples; adapt process IDs and permissions.' if lesson.id == 'performance' else 'Java 21 snippet. Imports, surrounding classes, and application-specific collaborators are omitted where indicated.' }}</p><pre><code>{{ lesson.code }}</code></pre></section>
+<section class="card pitfall-card" id="pitfalls"><h2>Common pitfalls</h2><p>{{ lesson.pitfall }}</p></section>
+<section id="practice"><h2>Check your understanding</h2><p>Apply this chapter’s ideas in {{ practice_count }} questions, then review the explanations.</p><form action="/practice" method="post"><input type="hidden" name="topic" value="{{ lesson.id }}"><button>Practice this chapter →</button></form></section>
+<section class="further-reading"><h2>Go to the source</h2><p><a class="text-link" href="{{ lesson.source }}" target="_blank" rel="noopener noreferrer">Official documentation ↗</a></p><p class="muted">Java 21 is the language baseline. Tool and library chapters identify external dependencies separately. Content reviewed {{ lesson.reviewed }}.</p></section>
+</article></div>
+<nav class="chapter-pagination" aria-label="Chapter navigation"><div>{% if previous %}<span class="muted">Previous chapter</span><a href="/lessons/{{ previous.id }}">← {{ previous.title }}</a>{% endif %}</div><div>{% if next_lesson %}<span class="muted">Next chapter</span><a href="/lessons/{{ next_lesson.id }}">{{ next_lesson.title }} →</a>{% endif %}</div></nav>
+{% endblock %}

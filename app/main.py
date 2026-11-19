@@ -3,7 +3,8 @@ import os
 import random
 import secrets
 import sqlite3
-from collections import defaultdict
+from collections import Counter, defaultdict
+from copy import deepcopy
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,12 +14,12 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from app.content import load_content
+
 ROOT = Path(__file__).resolve().parent.parent
-LESSONS = json.loads((ROOT / 'content/lessons.json').read_text())
-QUESTIONS = json.loads((ROOT / 'content/questions.json').read_text())
+LESSONS, QUESTIONS = load_content(ROOT / "content")
 TOPICS = {x['id']: x for x in LESSONS}
-assert len({q['id'] for q in QUESTIONS}) == len(QUESTIONS)
-assert all(q['topic'] in TOPICS and 0 <= q['answer'] < len(q['options']) for q in QUESTIONS)
+PARTS = list(dict.fromkeys(lesson['part'] for lesson in LESSONS))
 app = FastAPI(title='Daily Java')
 app.mount('/static', StaticFiles(directory=ROOT / 'app/static'), name='static')
 templates = Jinja2Templates(directory=str(ROOT / 'app/templates'))
@@ -47,7 +48,7 @@ def get_session(sid):
 
 
 def render(request, name, **context):
-    return templates.TemplateResponse(request=request, name=name, context={'topics': TOPICS, **context})
+    return templates.TemplateResponse(request=request, name=name, context={'topics': TOPICS, 'question_count': len(QUESTIONS), **context})
 
 
 def summary():
@@ -91,16 +92,35 @@ async def start(request: Request):
         if topic and topic not in TOPICS:
             raise HTTPException(400, 'Unknown topic')
         pool = [q for q in QUESTIONS if not topic or q['topic'] == topic]
-        # Round-robin across shuffled topics keeps a mixed session balanced.
+        # Favor unseen/less-practiced questions; randomize ties and keep topic variety.
+        # Use stable IDs so old snapshots and shuffled options do not affect exposure.
+        exposure = Counter()
+        topic_exposure = Counter()
+        with db() as conn:
+            completed = conn.execute('SELECT questions FROM sessions WHERE answers IS NOT NULL').fetchall()
+        for row in completed:
+            for previous in json.loads(row['questions']):
+                exposure[previous['id']] += 1
+                topic_exposure[previous['topic']] += 1
         groups = defaultdict(list)
         for q in random.sample(pool, len(pool)):
             groups[q['topic']].append(q)
-        order = random.sample(list(groups), len(groups))
+        for group in groups.values():
+            group.sort(key=lambda q: exposure[q['id']])
         questions = []
         while len(questions) < min(10, len(pool)):
-            for key in order:
-                if groups[key] and len(questions) < 10:
-                    questions.append(groups[key].pop())
+            available = [key for key, group in groups.items() if group]
+            random.shuffle(available)
+            available.sort(key=lambda key: (exposure[groups[key][0]['id']], topic_exposure[key]))
+            for key in available:
+                if len(questions) >= min(10, len(pool)):
+                    break
+                questions.append(deepcopy(groups[key].pop(0)))
+        # New sessions shuffle answer positions; exact retakes keep their snapshots.
+        for q in questions:
+            indices = random.sample(range(len(q['options'])), len(q['options']))
+            q['options'] = [q['options'][index] for index in indices]
+            q['answer'] = indices.index(q['answer'])
     sid = secrets.token_urlsafe(24)
     with db() as conn:
         conn.execute('INSERT INTO sessions VALUES (?, ?, ?, NULL)', (sid, datetime.now(timezone.utc).isoformat(timespec='seconds'), json.dumps(questions)))
@@ -150,15 +170,29 @@ def results(request: Request, sid: str):
 
 
 @app.get('/lessons')
-def lessons(request: Request):
-    return render(request, 'lessons.html', lessons=LESSONS)
+def lessons(request: Request, q: str = '', part: str = ''):
+    query = q.strip().casefold()
+    filtered = [lesson for lesson in LESSONS
+                if (not part or lesson['part'] == part)
+                and (not query or query in ' '.join([
+                    lesson['title'], lesson['body'], lesson['part'],
+                    *[section['title'] + ' ' + ' '.join(section['paragraphs'])
+                      for section in lesson['sections']]
+                ]).casefold())]
+    groups = [(name, [lesson for lesson in filtered if lesson['part'] == name]) for name in PARTS]
+    return render(request, 'lessons.html', lessons=filtered, groups=groups,
+                  parts=PARTS, query=q, selected_part=part, total_lessons=len(LESSONS))
 
 
 @app.get('/lessons/{topic}')
 def lesson(request: Request, topic: str):
     if topic not in TOPICS:
         raise HTTPException(404, 'Lesson not found')
-    return render(request, 'lesson.html', lesson=TOPICS[topic])
+    index = next(i for i, item in enumerate(LESSONS) if item['id'] == topic)
+    return render(request, 'lesson.html', lesson=TOPICS[topic],
+                  previous=LESSONS[index - 1] if index > 0 else None,
+                  next_lesson=LESSONS[index + 1] if index + 1 < len(LESSONS) else None,
+                  practice_count=sum(q['topic'] == topic for q in QUESTIONS))
 
 
 @app.get('/progress')

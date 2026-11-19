@@ -30,7 +30,7 @@ def test_complete_learning_loop(client):
     session = stored(path)
     questions = json.loads(session['questions'])
     assert len(questions) == 10
-    assert len({q['topic'] for q in questions}) == 6
+    assert len({q['topic'] for q in questions}) == 10
     page = client.get(path).text
     assert 'Finish &amp; review' in page
     assert questions[0]['explanation'] not in page
@@ -57,7 +57,7 @@ def test_complete_learning_loop(client):
 def test_validation_and_topic_practice(client):
     path = start(client, topic='concurrency')
     questions = json.loads(stored(path)['questions'])
-    assert len(questions) == 3
+    assert len(questions) == 6
     assert all(q['topic'] == 'concurrency' for q in questions)
     assert client.post(path, data={}).status_code == 400
     assert stored(path)['answers'] is None
@@ -77,3 +77,66 @@ def test_content_integrity():
         assert len(q['options']) == len(set(q['options']))
         assert 0 <= q['answer'] < len(q['options'])
         assert q['explanation']
+
+
+def test_handbook_search_navigation_and_chapter_practice(client):
+    page = client.get('/lessons')
+    assert page.status_code == 200
+    for topic, lesson in TOPICS.items():
+        assert '/lessons/' + topic in page.text
+        detail = client.get('/lessons/' + topic)
+        assert lesson['sections'][0]['title'] in detail.text
+        path = start(client, topic=topic)
+        questions = json.loads(stored(path)['questions'])
+        expected = [q for q in QUESTIONS if q['topic'] == topic]
+        assert len(questions) == min(10, len(expected))
+        assert {q['id'] for q in questions} == {q['id'] for q in expected}
+        assert any(q.get('code') for q in questions)
+        assert '42' in detail.text or 'Worked example' in detail.text
+    search = client.get('/lessons', params={'q': 'deadlock'})
+    assert '/lessons/locks' in search.text
+    assert '/lessons/strings' not in search.text
+    empty = client.get('/lessons', params={'q': 'no-such-java-concept-12345'})
+    assert 'No chapters found' in empty.text
+    part = TOPICS['types']['part']
+    filtered = client.get('/lessons', params={'part': part})
+    assert '/lessons/types' in filtered.text
+    assert '/lessons/jdbc' not in filtered.text
+    assert '&lt;script&gt;' in client.get('/lessons', params={'q': '<script>'}).text
+
+
+def test_freshness_and_shuffled_answer_integrity(client):
+    canonical = {q['id']: q for q in QUESTIONS}
+    seen = set()
+    # Every question remains unseen during these first nineteen full sessions.
+    for _ in range(len(QUESTIONS) // 10):
+        path = start(client)
+        questions = json.loads(stored(path)['questions'])
+        assert len({q['topic'] for q in questions}) == 10
+        ids = {q['id'] for q in questions}
+        assert len(ids) == 10
+        assert not seen.intersection(ids)
+        seen.update(ids)
+        for q in questions:
+            original = canonical[q['id']]
+            assert q['options'][q['answer']] == original['options'][original['answer']]
+            assert set(q['options']) == set(original['options'])
+        response = client.post(path, data={q['id']: str(q['answer']) for q in questions})
+        assert '10 / 10 correct' in response.text
+    # Exhausting unseen questions still produces a full, nonduplicated session.
+    path = start(client)
+    questions = json.loads(stored(path)['questions'])
+    assert len({q['id'] for q in questions}) == 10
+    assert set(canonical) - seen <= {q['id'] for q in questions}
+
+
+def test_invalid_content_rejected(tmp_path):
+    from app.content import load_content
+    from app.main import ROOT
+    lessons = json.loads((ROOT / 'content/lessons.json').read_text())
+    questions = json.loads((ROOT / 'content/questions.json').read_text())
+    (tmp_path / 'lessons.json').write_text(json.dumps(lessons))
+    questions[0]['topic'] = 'missing'
+    (tmp_path / 'questions.json').write_text(json.dumps(questions))
+    with pytest.raises(ValueError, match='Unknown lesson'):
+        load_content(tmp_path)

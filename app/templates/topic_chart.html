@@ -1,0 +1,17 @@
+<section class="card knowledge-map" aria-labelledby="map-title">
+<div class="map-heading"><div><p class="eyebrow">YOUR KNOWLEDGE MAP</p><h2 id="map-title">Strengths &amp; next steps</h2></div><a class="text-link" href="/lessons">All lessons →</a></div>
+<p class="muted" id="map-explanation">Each equal-size slice is one chapter. Color shows your practice signal, not a share of your score. Click a slice or chapter below to open its lesson.</p>
+<div class="map-layout"><div class="map-visual">
+<svg viewBox="0 0 400 400" class="topic-pie" role="group" aria-label="Clickable Java topic chart" aria-describedby="map-explanation">
+{% for item in chart['items'] %}<a href="/lessons/{{ item.id }}" class="topic-sector state-{{ item.state }}" aria-label="{{ item.title }}: {{ item.label }}, {{ item.score }}. Open lesson." data-topic="{{ item.title }}" data-score="{{ item.label }} · {{ item.score }}">
+<title>{{ item.number }}. {{ item.title }} — {{ item.label }} — {{ item.score }}</title><path d="{{ item.path }}"/><text x="{{ item.x }}" y="{{ item.y }}" text-anchor="middle" dominant-baseline="central" aria-hidden="true">{{ item.number }}</text></a>{% endfor %}
+<text x="200" y="190" text-anchor="middle" class="map-count">{{ chart.practiced }}/{{ chart.total }}</text><text x="200" y="218" text-anchor="middle" class="map-caption">chapters explored</text>
+</svg>
+<div class="map-selection" aria-live="polite" aria-atomic="true"><strong data-map-title>Choose a chapter</strong><span data-map-score>Hover or focus a slice to see its topic and score.</span></div>
+</div><div class="map-legend">
+{% for group in chart.groups %}<details class="map-group state-{{ group.state }}" {% if group['items'] and group.state != 'unpracticed' %}open{% endif %}><summary><span class="map-dot" aria-hidden="true"></span>{{ group.label }}<span class="map-group-count">{{ group['items']|length }}</span></summary>
+{% for item in group['items'] %}<a class="map-topic" href="/lessons/{{ item.id }}" data-topic="{{ item.title }}" data-score="{{ item.label }} · {{ item.score }}"><span class="map-topic-number">{{ item.number }}</span><span>{{ item.title }}<small>{{ item.score }}</small></span><span aria-hidden="true">↗</span></a>{% else %}<p class="muted">No chapters in this group yet.</p>{% endfor %}</details>{% endfor %}
+</div></div>
+<p class="muted map-method">After at least 5 answers per topic: strengths ≥80%, building confidence 60–79%, focus areas &lt;60%. Fewer than 5 answers are early signals. Retakes count; this is practice history, not a mastery assessment.</p>
+{% if not chart.practiced %}<p class="muted">Your map is ready to explore. Complete a quiz to start seeing your strengths and focus areas.</p>{% endif %}
+</section><script src="{{ url_for('static', path='progress-chart.js') }}" defer></script>

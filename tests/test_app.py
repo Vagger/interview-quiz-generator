@@ -140,3 +140,33 @@ def test_invalid_content_rejected(tmp_path):
     (tmp_path / 'questions.json').write_text(json.dumps(questions))
     with pytest.raises(ValueError, match='Unknown lesson'):
         load_content(tmp_path)
+
+
+def test_topic_chart_signals_and_lesson_links(client):
+    from app.main import LESSONS
+    from app.progress_chart import topic_chart
+    signals = [('types', {'correct': 4, 'total': 5}),
+               ('strings', {'correct': 3, 'total': 5}),
+               ('runtime', {'correct': 0, 'total': 5}),
+               ('generics', {'correct': 1, 'total': 1})]
+    chart = topic_chart(LESSONS, signals)
+    by_id = {item['id']: item for item in chart['items']}
+    assert by_id['types']['state'] == 'strength'
+    assert by_id['strings']['state'] == 'building'
+    assert by_id['runtime']['state'] == 'focus'
+    assert by_id['generics']['state'] == 'early'
+    assert by_id['jdbc']['state'] == 'unpracticed'
+    assert chart['practiced'] == 4
+    assert sum(len(group['items']) for group in chart['groups']) == len(LESSONS)
+    empty = client.get('/progress')
+    assert empty.status_code == 200
+    assert 'Complete a quiz' in empty.text
+    assert empty.text.count('class="topic-sector ') == len(LESSONS)
+    for topic in TOPICS:
+        assert 'href="/lessons/' + topic + '"' in empty.text
+    path = start(client, topic='types')
+    questions = json.loads(stored(path)['questions'])
+    client.post(path, data={q['id']: str(q['answer']) for q in questions})
+    page = client.get('/progress')
+    assert 'Strengths · 6/6 correct · 100%' in page.text
+    assert '1/32' in page.text

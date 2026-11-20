@@ -15,6 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from app.content import load_content
+from app.progress_chart import topic_chart
 
 ROOT = Path(__file__).resolve().parent.parent
 LESSONS, QUESTIONS = load_content(ROOT / "content")
@@ -70,7 +71,7 @@ def summary():
 @app.get('/')
 def home(request: Request):
     attempts, focus = summary()
-    return render(request, 'home.html', attempts=attempts, focus=focus)
+    return render(request, 'home.html', attempts=attempts, focus=focus, chart=topic_chart(LESSONS, focus))
 
 
 @app.post('/practice')
@@ -198,4 +199,4 @@ def lesson(request: Request, topic: str):
 @app.get('/progress')
 def progress(request: Request):
     attempts, focus = summary()
-    return render(request, 'progress.html', attempts=attempts, focus=focus)
+    return render(request, 'progress.html', attempts=attempts, focus=focus, chart=topic_chart(LESSONS, focus))
